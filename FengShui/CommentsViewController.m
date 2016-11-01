@@ -83,12 +83,23 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
-
-        static NSString *identifier = @"SubBranchCell2";
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-        UILabel *urlBranch = (UILabel *)[cell viewWithTag:102];
-        urlBranch.text = [self.BranchURLs objectAtIndex:indexPath.row];
-
+    static NSString *identifier = @"SubBranchCell2";
+    cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    //user name
+    UILabel *userName = (UILabel*)[cell viewWithTag:102];
+    //user photo
+    UIImageView *userPhoto = (UIImageView*)[cell viewWithTag:101];
+    [self.view layoutIfNeeded];
+    userPhoto.layer.cornerRadius = userPhoto.frame.size.height/2;
+    userPhoto.clipsToBounds = YES;
+    userPhoto.layer.borderWidth = 3.0f;
+    userPhoto.layer.borderColor = [UIColor colorWithRed:87.0f/255.0f green:71.0f/255.0f blue:47.0f/255.0f alpha:1].CGColor;
+    // comment content
+    UILabel *commentContent = (UILabel *)[cell viewWithTag:103];
+    commentContent.text = [self.BranchURLs objectAtIndex:indexPath.row];
+    //time ago from posted
+    UILabel *agoTime = (UILabel*)[cell viewWithTag:104];
+    
     return cell;
     
 }
@@ -128,19 +139,23 @@
 
 
 #pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    if (self.lastContentOffset > scrollView.contentOffset.y)
-    {
-        //NSLog(@"Scrolling Up");
-    }
-    else if (self.lastContentOffset < scrollView.contentOffset.y)
-    {
-        //NSLog(@"Scrolling Down");
-        [self.textView resignFirstResponder];
-    }
-    
     self.lastContentOffset = scrollView.contentOffset.y;
+}
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    if ([scrollView isKindOfClass:[UICollectionView class]]){
+        if (self.lastContentOffset < scrollView.contentOffset.y){
+            
+        //NSLog(@"Scrolling Up");
+        }
+        else if (self.lastContentOffset > scrollView.contentOffset.y)
+        {
+        //NSLog(@"Scrolling Down");
+            [self.textView resignFirstResponder];
+        }
+}
+
 }
 @end

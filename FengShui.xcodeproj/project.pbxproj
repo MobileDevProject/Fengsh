@@ -195,6 +195,7 @@
 		F38A16CD1DC7B876004B499F /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = F38A16CC1DC7B876004B499F /* comment.png */; };
 		F38A17071DC7FF64004B499F /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F38A17061DC7FF64004B499F /* CommentsViewController.m */; };
 		F38A170A1DC8211D004B499F /* GCPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F38A17091DC8211D004B499F /* GCPlaceholderTextView.m */; };
+		F38A170D1DC84559004B499F /* commentContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F38A170C1DC84559004B499F /* commentContentsViewController.m */; };
 		FCCFC01605D9828EBA850BCF /* libPods-FengShuiUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CE60BCB3D02DA6DCA8C330 /* libPods-FengShuiUITests.a */; };
 /* End PBXBuildFile section */
 
@@ -435,6 +436,8 @@
 		F38A17061DC7FF64004B499F /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
 		F38A17081DC8211D004B499F /* GCPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlaceholderTextView.h; sourceTree = "<group>"; };
 		F38A17091DC8211D004B499F /* GCPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlaceholderTextView.m; sourceTree = "<group>"; };
+		F38A170B1DC84559004B499F /* commentContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentContentsViewController.h; sourceTree = "<group>"; };
+		F38A170C1DC84559004B499F /* commentContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commentContentsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -923,6 +926,7 @@
 		F38A17031DC7FC3A004B499F /* Mainviewcontrollers */ = {
 			isa = PBXGroup;
 			children = (
+				F38A170E1DC84560004B499F /* Comment */,
 				8C071D4F1D67861500C33F56 /* SplashAndHomeViewController.h */,
 				8C071D501D67861500C33F56 /* SplashAndHomeViewController.m */,
 				8C1F308E1D5570ED0018DCAD /* totalMenuViewController.h */,
@@ -935,8 +939,6 @@
 				8C0760EB1D5CF967008EA9B6 /* SubBranchWebViewController.m */,
 				8C06C3FE1D6CBF9C0009E9CC /* AboutAppViewController.h */,
 				8C06C3FF1D6CBF9D0009E9CC /* AboutAppViewController.m */,
-				F38A17051DC7FF64004B499F /* CommentsViewController.h */,
-				F38A17061DC7FF64004B499F /* CommentsViewController.m */,
 			);
 			name = Mainviewcontrollers;
 			sourceTree = "<group>";
@@ -948,6 +950,17 @@
 				8C06C4121D6CE67F0009E9CC /* SideMenuViewController.m */,
 			);
 			name = sideMenu;
+			sourceTree = "<group>";
+		};
+		F38A170E1DC84560004B499F /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				F38A17051DC7FF64004B499F /* CommentsViewController.h */,
+				F38A17061DC7FF64004B499F /* CommentsViewController.m */,
+				F38A170B1DC84559004B499F /* commentContentsViewController.h */,
+				F38A170C1DC84559004B499F /* commentContentsViewController.m */,
+			);
+			name = Comment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1392,6 +1405,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F38A170D1DC84559004B499F /* commentContentsViewController.m in Sources */,
 				8C1F30901D5570ED0018DCAD /* totalMenuViewController.m in Sources */,
 				8C4F90661D6E1FC800149B4A /* GeoPointCompass.m in Sources */,
 				8C0760EC1D5CF967008EA9B6 /* SubBranchWebViewController.m in Sources */,
