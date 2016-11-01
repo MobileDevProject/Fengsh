@@ -10,11 +10,13 @@
 #import "AllDirectionBranchTableViewController.h"
 #import "SubBranchViewController.h"
 #import "SubBranchWebViewController.h"
+#import "CommentsViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SWRevealViewController.h"
 @interface AllDirectionBranchTableViewController ()<SWRevealViewControllerDelegate>
 {
     NSMutableArray* arrSnippetImageName;
+    AppDelegate *app;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *branchListTable;
@@ -34,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _boolImageOrURL = true;
-    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    app = [UIApplication sharedApplication].delegate;
     _BranchName = app.strBranchName;
     _BranchDirection = app.BranchDirection;
     _ButtonBranchName.text = _BranchName;
@@ -121,7 +123,6 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [self playSound:@"m3"];
-    AppDelegate *app= [UIApplication sharedApplication].delegate;
     app.SubBranchIndex = (int)indexPath.row;
     //app.SubBranchWebIndex = (int)indexPath.row + 1;
     if (_boolImageOrURL) {
@@ -138,7 +139,10 @@
 - (IBAction)goComment:(UIButton *)sender {
     
     CGRect buttonFrame = [sender convertRect:sender.bounds toView:self.branchListTable];
-    int number  =  [self.branchListTable indexPathForItemAtPoint:buttonFrame.origin].row;
+    int number  =  (int)[self.branchListTable indexPathForItemAtPoint:buttonFrame.origin].row;
+    app.SubBranchIndex = number;
+    CommentsViewController *DirectionBranchTableScreen = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CommentsViewController"];
+    [self.navigationController pushViewController:DirectionBranchTableScreen animated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];

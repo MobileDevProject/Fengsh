@@ -53,7 +53,7 @@
 	<key>FacebookAppID</key>
 	<string>1412737962075015</string>
 	<key>FacebookDisplayName</key>
-	<string>FengShui 4 U</string>
+	<string>FengShui Home</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -73,6 +73,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Fengshui Home needs to access your camera device for your profile</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Fengshui Home needs to access your device photo library for your profile</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AvenirNextLTPro-Medium_0.ttf</string>
@@ -97,9 +101,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Fengshui Home needs to access your device photo library for your profile</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Fengshui Home needs to access your camera device for your profile</string>
 </dict>
 </plist>
