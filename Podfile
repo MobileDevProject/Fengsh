@@ -12,10 +12,9 @@ pod ‘Firebase/Database’
 pod ‘Firebase/Storage’
 pod 'FBSDKLoginKit', '~> 4.1'
 pod ‘FLAnimatedImage’, ‘~> 1.0’
-pod 'Fabric'
 pod 'TwitterKit'
 pod 'TwitterCore'
-
+pod 'SDWebImage', '~>3.8'
   target 'FengShuiTests' do
     inherit! :search_paths
     # Pods for testing

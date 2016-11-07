@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "SignInViewController.h"
 #import "SWRevealViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "ProfileViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MBProgressHUD.h"
@@ -25,9 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardBeHidden:) name:UIKeyboardWillHideNotification object:nil];
-    [self.imgPersonPhoto setImage:[UIImage imageNamed:@"person0.jpg"]];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     [self.view layoutIfNeeded];
     self.imgPersonPhoto.layer.cornerRadius = self.imgPersonPhoto.frame.size.height/2;
     self.imgPersonPhoto.clipsToBounds = YES;
@@ -40,8 +40,11 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)viewWillAppear:(BOOL)animated{
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
+    [self.imgPersonPhoto sd_setImageWithURL:app.user.photoURL
+                       placeholderImage:[UIImage imageNamed:@"Splash.png"]];
 }
 
 /*
@@ -204,7 +207,7 @@
                  [self.view setUserInteractionEnabled:YES];
         }
          else{
-             [[NSUserDefaults standardUserDefaults] setObject:strUserEmail forKey:@"preferenceUserName"];
+             //[[NSUserDefaults standardUserDefaults] setObject:strUserEmail forKey:@"preferenceUserName"];
              [[NSUserDefaults standardUserDefaults] setObject:strUserEmail forKey:@"preferenceEmail"];
              [[NSUserDefaults standardUserDefaults] setObject:strUserPass forKey:@"preferencePass"];
              [[NSUserDefaults standardUserDefaults] synchronize];

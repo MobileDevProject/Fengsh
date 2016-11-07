@@ -73,7 +73,6 @@
 		8C1F6B581D71D7EB005B41D6 /* W-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C1F6B401D71D7EB005B41D6 /* W-2.png */; };
 		8C1F6B591D71D7EB005B41D6 /* W-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C1F6B411D71D7EB005B41D6 /* W-3.png */; };
 		8C23462E1D8208C800E92308 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C23462D1D8208C700E92308 /* MBProgressHUD.m */; };
-		8C4903501D642032001BADC5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C49034F1D642032001BADC5 /* GoogleService-Info.plist */; };
 		8C4903521D642069001BADC5 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8C4903511D642069001BADC5 /* Podfile */; };
 		8C4F90611D6D429500149B4A /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4F90601D6D429500149B4A /* SWRevealViewController.m */; };
 		8C4F90661D6E1FC800149B4A /* GeoPointCompass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C4F90651D6E1FC800149B4A /* GeoPointCompass.m */; };
@@ -192,6 +191,9 @@
 		8CFECE361D73D08E005CCE86 /* forwardButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8CFECE341D73D08E005CCE86 /* forwardButton.mp3 */; };
 		B550D12F3B8C56C1EB84CE83 /* libPods-FengShui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A49D6C4226656BFE90561CD /* libPods-FengShui.a */; };
 		D31B27EBF28E9C1171645C29 /* libPods-FengShuiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 081269500298EBC611A608EE /* libPods-FengShuiTests.a */; };
+		F328BC831DCE578500EA1F76 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F328BC821DCE578500EA1F76 /* UserInfo.m */; };
+		F341EFFB1DCBA3DF00FF19B3 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = F341EFFA1DCBA3DF00FF19B3 /* Request.m */; };
+		F34C96921DCA92EA0096A897 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F34C96911DCA92EA0096A897 /* GoogleService-Info.plist */; };
 		F38A16CD1DC7B876004B499F /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = F38A16CC1DC7B876004B499F /* comment.png */; };
 		F38A17071DC7FF64004B499F /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F38A17061DC7FF64004B499F /* CommentsViewController.m */; };
 		F38A170A1DC8211D004B499F /* GCPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F38A17091DC8211D004B499F /* GCPlaceholderTextView.m */; };
@@ -300,7 +302,6 @@
 		8C1F6B411D71D7EB005B41D6 /* W-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "W-3.png"; sourceTree = "<group>"; };
 		8C23462C1D8208C700E92308 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8C23462D1D8208C700E92308 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		8C49034F1D642032001BADC5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C4903511D642069001BADC5 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8C4F905F1D6D429500149B4A /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		8C4F90601D6D429500149B4A /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -431,6 +432,11 @@
 		A9CE60BCB3D02DA6DCA8C330 /* libPods-FengShuiUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FengShuiUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3AE7AC6444CE25202B202A6 /* Pods-FengShuiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FengShuiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FengShuiUITests/Pods-FengShuiUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C3B618614E3AF4B66A0C0441 /* Pods-FengShuiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FengShuiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FengShuiTests/Pods-FengShuiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F328BC811DCE578500EA1F76 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		F328BC821DCE578500EA1F76 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		F341EFF91DCBA3DF00FF19B3 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
+		F341EFFA1DCBA3DF00FF19B3 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
+		F34C96911DCA92EA0096A897 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F38A16CC1DC7B876004B499F /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
 		F38A17051DC7FF64004B499F /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
 		F38A17061DC7FF64004B499F /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
@@ -729,8 +735,8 @@
 				8C90DE1C1D70B834004717BD /* font */,
 				8C1F6AEF1D7192AF005B41D6 /* music */,
 				8C071D2F1D67755C00C33F56 /* png */,
-				8C49034F1D642032001BADC5 /* GoogleService-Info.plist */,
 				8CA288F31D5158960015C3C6 /* main.m */,
+				F34C96911DCA92EA0096A897 /* GoogleService-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -900,6 +906,24 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F328BC801DCE578500EA1F76 /* user */ = {
+			isa = PBXGroup;
+			children = (
+				F328BC811DCE578500EA1F76 /* UserInfo.h */,
+				F328BC821DCE578500EA1F76 /* UserInfo.m */,
+			);
+			path = user;
+			sourceTree = "<group>";
+		};
+		F341EFF81DCBA39D00FF19B3 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				F341EFF91DCBA3DF00FF19B3 /* Request.h */,
+				F341EFFA1DCBA3DF00FF19B3 /* Request.m */,
+			);
+			name = Request;
+			sourceTree = "<group>";
+		};
 		F38A17011DC7FBE9004B499F /* sign */ = {
 			isa = PBXGroup;
 			children = (
@@ -916,6 +940,8 @@
 		F38A17021DC7FC0D004B499F /* viewcontrollers */ = {
 			isa = PBXGroup;
 			children = (
+				F328BC801DCE578500EA1F76 /* user */,
+				F341EFF81DCBA39D00FF19B3 /* Request */,
 				F38A17041DC7FD9A004B499F /* sideMenu */,
 				F38A17031DC7FC3A004B499F /* Mainviewcontrollers */,
 				F38A17011DC7FBE9004B499F /* sign */,
@@ -1161,7 +1187,6 @@
 				8CA288FF1D5158960015C3C6 /* Assets.xcassets in Resources */,
 				8C4903521D642069001BADC5 /* Podfile in Resources */,
 				8CC3F38E1D6B492D00F76FF6 /* North_Career2.jpg in Resources */,
-				8C4903501D642032001BADC5 /* GoogleService-Info.plist in Resources */,
 				8C1F6B451D71D7EB005B41D6 /* N-1.png in Resources */,
 				8C1F6B431D71D7EB005B41D6 /* E-2.png in Resources */,
 				8CC3F4271D6B9B0B00F76FF6 /* SouthEast_SmallWood2.jpg in Resources */,
@@ -1203,6 +1228,7 @@
 				8CC3F3B51D6B734800F76FF6 /* SouthWest_BigEarthBack.png in Resources */,
 				8C06C40F1D6CE01D0009E9CC /* logOut.png in Resources */,
 				8C558C1A1D6E9AF5001F947A /* iTunesArtwork@2x.png in Resources */,
+				F34C96921DCA92EA0096A897 /* GoogleService-Info.plist in Resources */,
 				8CC3F4381D6B9B0B00F76FF6 /* West_Dependance1.jpg in Resources */,
 				8CC3F4391D6B9B0B00F76FF6 /* West_Dependance2.jpg in Resources */,
 				8CC3F3C71D6B8D9E00F76FF6 /* NorthEast_Education2.jpg in Resources */,
@@ -1413,6 +1439,7 @@
 				8C0760E91D5CE173008EA9B6 /* SubBranchViewController.m in Sources */,
 				8C06C4031D6CC9830009E9CC /* ProfileViewController.m in Sources */,
 				8C071D8F1D67F53E00C33F56 /* SignInViewController.m in Sources */,
+				F328BC831DCE578500EA1F76 /* UserInfo.m in Sources */,
 				8CA288F71D5158960015C3C6 /* AppDelegate.m in Sources */,
 				F38A17071DC7FF64004B499F /* CommentsViewController.m in Sources */,
 				41A41AE51D5FD420001E88FE /* SignUpViewController.m in Sources */,
@@ -1420,6 +1447,7 @@
 				8CB9B57D1D59271C0010427D /* AllDirectionBranchTableViewController.m in Sources */,
 				8C4F90611D6D429500149B4A /* SWRevealViewController.m in Sources */,
 				8C06C4131D6CE67F0009E9CC /* SideMenuViewController.m in Sources */,
+				F341EFFB1DCBA3DF00FF19B3 /* Request.m in Sources */,
 				8CA288F41D5158960015C3C6 /* main.m in Sources */,
 				F38A170A1DC8211D004B499F /* GCPlaceholderTextView.m in Sources */,
 				8C23462E1D8208C800E92308 /* MBProgressHUD.m in Sources */,
@@ -1564,7 +1592,7 @@
 			baseConfigurationReference = 416EDF1246E43DE3C26AA966 /* Pods-FengShui.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jayabalasingam balakrishnan (3QWVTFJ9E7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 64PCZ59C3B;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1586,6 +1614,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jay.fengshui;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1594,7 +1623,7 @@
 			baseConfigurationReference = 560255AEDC70C56F4CED1A81 /* Pods-FengShui.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jayabalasingam balakrishnan (3QWVTFJ9E7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 64PCZ59C3B;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1616,6 +1645,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jay.fengshui;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

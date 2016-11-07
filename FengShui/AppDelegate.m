@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-@import Firebase;
+
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Fabric/Fabric.h>
 #import <TwitterKit/TwitterKit.h>

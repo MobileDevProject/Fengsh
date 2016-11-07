@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "UserInfo.h"
+@import Firebase;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) int NumberOfPhotos;
 @property (nonatomic) BOOL splashOn;
+@property (nonatomic, retain)FIRUser* currentUser;
+@property (nonatomic, retain)UserInfo* user;
 
 @property (retain, nonatomic) NSString *strBranchName;
 @property (nonatomic) int Branch_Count;

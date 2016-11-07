@@ -10,6 +10,7 @@
 #import "SignUpViewController.h"
 #import "SWRevealViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "Request.h"
 #import "MBProgressHUD.h"
 @interface SignUpViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *txtUserName;
@@ -203,7 +204,7 @@
              [self.view setUserInteractionEnabled:YES];
          }
          else{
-             [[NSUserDefaults standardUserDefaults] setObject:strUserEmail forKey:@"preferenceUserName"];
+             //[[NSUserDefaults standardUserDefaults] setObject:strUserEmail forKey:@"preferenceUserName"];
              [[NSUserDefaults standardUserDefaults] setObject:strUserEmail forKey:@"preferenceEmail"];
              [[NSUserDefaults standardUserDefaults] setObject:strUserPass forKey:@"preferencePass"];
              [[NSUserDefaults standardUserDefaults] synchronize];
@@ -217,17 +218,21 @@
                 NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:@"savedImage.png"];
                 NSData *imageData = UIImagePNGRepresentation(self.imgPersonPhoto.image);
                 [imageData writeToFile:savedImagePath atomically:NO];
-         
+         //register user
+             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                 // Do something...
+             [Request registerUser:_txtUserName.text email:_txtEmail.text image:self.imgPersonPhoto.image];
              //go sign in
+                 //after progress
+                 dispatch_async(dispatch_get_main_queue(), ^{///////
              [self presentViewController:loginErrorAlert animated:YES completion:nil];
              UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                 SWRevealViewController *swRevealViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
-                 [self presentViewController:swRevealViewController animated:YES completion:nil];
-                 [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
+                 [self.navigationController popViewControllerAnimated:YES];
              
             }];
              [loginErrorAlert addAction:ok];
-         
+                 });
+             });
 
          
          }

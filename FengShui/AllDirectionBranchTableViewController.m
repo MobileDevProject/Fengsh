@@ -137,7 +137,7 @@
 
 }
 - (IBAction)goComment:(UIButton *)sender {
-    
+    [self playSound:@"m3"];
     CGRect buttonFrame = [sender convertRect:sender.bounds toView:self.branchListTable];
     int number  =  (int)[self.branchListTable indexPathForItemAtPoint:buttonFrame.origin].row;
     app.SubBranchIndex = number;

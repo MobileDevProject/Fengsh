@@ -240,13 +240,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKs-Lp-cR6">
                                 <rect key="frame" x="-32.5" y="114" width="440" height="440"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x6l-qT-gKC">
-                                        <rect key="frame" x="195.5" y="195" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="dUd-8X-a9z"/>
-                                            <constraint firstAttribute="height" constant="50" id="p4K-pU-ZXq"/>
-                                        </constraints>
-                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="compass.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pzg-Gr-a75">
                                         <rect key="frame" x="0.0" y="0.0" width="440" height="440"/>
                                     </imageView>
@@ -588,6 +581,13 @@
                                             <constraint firstItem="84r-DR-dzk" firstAttribute="centerX" secondItem="js6-OA-w6r" secondAttribute="centerX" id="yYo-4a-p2l"/>
                                         </constraints>
                                     </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x6l-qT-gKC">
+                                        <rect key="frame" x="195.5" y="195" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="dUd-8X-a9z"/>
+                                            <constraint firstAttribute="height" constant="50" id="p4K-pU-ZXq"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Pzg-Gr-a75" firstAttribute="width" secondItem="eKs-Lp-cR6" secondAttribute="width" id="3Qn-3M-9w3"/>
@@ -1194,7 +1194,7 @@
                 <navigationController storyboardIdentifier="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="d7y-ID-Efq" sceneMemberID="viewController">
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="NkG-XQ-63m">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NkG-XQ-63m">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1212,7 +1212,7 @@
                 <navigationController navigationBarHidden="YES" id="shm-F6-tfN" sceneMemberID="viewController">
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="mNn-yL-c3A">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mNn-yL-c3A">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1740,7 +1740,7 @@ This way it helps users to search for related items by simply using this app.</s
                 <navigationController navigationBarHidden="YES" id="YcT-3Z-mSY" sceneMemberID="viewController">
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pKK-UY-bt0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pKK-UY-bt0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2622,8 +2622,11 @@ This way it helps users to search for related items by simply using this app.</s
                                         </constraints>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ajS-Nw-ZSJ" customClass="GCPlaceholderTextView">
-                                        <rect key="frame" x="48" y="5" width="257" height="50"/>
+                                        <rect key="frame" x="48" y="15" width="257" height="45"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="1kS-z9-pmX"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="AvenirNextLTPro-Medium" family="Avenir Next LT Pro" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -2635,18 +2638,20 @@ This way it helps users to search for related items by simply using this app.</s
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AvenirNextLTPro-Medium" family="Avenir Next LT Pro" pointSize="17"/>
                                         <state key="normal" title="Post"/>
+                                        <connections>
+                                            <action selector="writeComment:" destination="YAo-gt-fjh" eventType="touchUpInside" id="Yp3-kI-wlA"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="ajS-Nw-ZSJ" firstAttribute="centerY" secondItem="SJa-bF-W04" secondAttribute="centerY" id="Hds-qs-aHF"/>
-                                    <constraint firstItem="ajS-Nw-ZSJ" firstAttribute="height" secondItem="SJa-bF-W04" secondAttribute="height" constant="-10" id="JiZ-B2-rsO"/>
                                     <constraint firstItem="ajS-Nw-ZSJ" firstAttribute="leading" secondItem="SJa-bF-W04" secondAttribute="leading" constant="48" id="REu-EN-ofv"/>
                                     <constraint firstItem="OHm-5r-Rml" firstAttribute="centerY" secondItem="SJa-bF-W04" secondAttribute="centerY" id="Srl-as-NRZ"/>
                                     <constraint firstItem="OHm-5r-Rml" firstAttribute="leading" secondItem="ajS-Nw-ZSJ" secondAttribute="trailing" constant="16" id="UXm-J1-uu2"/>
                                     <constraint firstItem="XUL-Zy-qL9" firstAttribute="top" secondItem="SJa-bF-W04" secondAttribute="top" id="Ve2-FP-dzH"/>
                                     <constraint firstItem="XUL-Zy-qL9" firstAttribute="centerX" secondItem="SJa-bF-W04" secondAttribute="centerX" id="XLe-gW-eqd"/>
                                     <constraint firstAttribute="height" constant="60" id="bQW-9h-sfz"/>
+                                    <constraint firstItem="ajS-Nw-ZSJ" firstAttribute="top" secondItem="SJa-bF-W04" secondAttribute="top" constant="15" id="cdB-qw-zD8"/>
                                     <constraint firstAttribute="trailing" secondItem="OHm-5r-Rml" secondAttribute="trailing" constant="8" id="eee-Va-fFa"/>
                                     <constraint firstItem="XUL-Zy-qL9" firstAttribute="width" secondItem="SJa-bF-W04" secondAttribute="width" id="vdd-m3-f2s"/>
                                 </constraints>
@@ -2716,7 +2721,7 @@ This way it helps users to search for related items by simply using this app.</s
                                         </constraints>
                                         <state key="normal" image="Navigation_drop.png"/>
                                         <connections>
-                                            <action selector="goSideMenu:" destination="MY4-ke-IlG" eventType="touchUpInside" id="TCy-dy-j6H"/>
+                                            <action selector="goSideMenu:" destination="MY4-ke-IlG" eventType="touchUpInside" id="apf-We-iUb"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yf-Dq-0Oc" userLabel="BacktoLogIn">
@@ -2727,7 +2732,7 @@ This way it helps users to search for related items by simply using this app.</s
                                         </constraints>
                                         <state key="normal" backgroundImage="backBatton.png"/>
                                         <connections>
-                                            <action selector="BackToTotallMenu:" destination="MY4-ke-IlG" eventType="touchUpInside" id="zdC-mw-qKB"/>
+                                            <action selector="BackTo:" destination="MY4-ke-IlG" eventType="touchUpInside" id="tkv-Iz-iO5"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2745,7 +2750,7 @@ This way it helps users to search for related items by simply using this app.</s
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-bA-rQv" userLabel="title bar">
-                                <rect key="frame" x="0.0" y="275.5" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="276" width="375" height="56"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0cu-RA-2AM">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
@@ -2774,7 +2779,7 @@ This way it helps users to search for related items by simply using this app.</s
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2CQ-Mu-0o5">
-                                <rect key="frame" x="0.0" y="276.5" width="375" height="54"/>
+                                <rect key="frame" x="0.0" y="277" width="375" height="54"/>
                                 <fontDescription key="fontDescription" name="AvenirNextLTPro-Medium" family="Avenir Next LT Pro" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

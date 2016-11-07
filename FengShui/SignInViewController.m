@@ -10,10 +10,14 @@
 #import "SignInViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MBProgressHUD.h"
-
+#import "AppDelegate.h"
+#import "Request.h"
 @import Firebase;
 
 @interface SignInViewController ()<UITextFieldDelegate>
+{
+    AppDelegate *app;
+}
 @property (weak, nonatomic) IBOutlet UITextField *txtUserName;
 @property (weak, nonatomic) IBOutlet UITextField *txtPassword;
 
@@ -23,12 +27,13 @@
 
 - (void)viewDidLoad {
 
-        [super viewDidLoad];
+    [super viewDidLoad];
     _txtUserName.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferenceEmail"];
     
     _txtPassword.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferencePass"];
+    app = [UIApplication sharedApplication].delegate;
     
-    // Do any additional setup after loading the view.
+
 
 }
 
@@ -123,13 +128,13 @@
                                      dispatch_async(dispatch_get_main_queue(), ^{///////
                                          [MBProgressHUD hideHUDForView:self.view animated:YES];/////
                                      if (error==nil) {
-                                         SWRevealViewController *swRevealViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
-                                         [self presentViewController:swRevealViewController animated:YES completion:nil];
+                                         
                                          NSString *userName = _txtUserName.text;
                                          NSString *userPass = _txtPassword.text;
                                          [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"preferenceEmail"];
                                          [[NSUserDefaults standardUserDefaults] setObject:userPass forKey:@"preferencePass"];
                                          [[NSUserDefaults standardUserDefaults] synchronize];
+                                         [self getUserDataAndGo];
                                      }
                                      });
                                      //after progress
@@ -147,7 +152,59 @@
     }
 
 }
-
+-(void)getUserDataAndGo{
+    FIRUser *user = [FIRAuth auth].currentUser;
+    if (user !=nil) {
+        
+        [self.view setUserInteractionEnabled:NO];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        //get manager data
+        app.user.userId = [NSString stringWithFormat:@"%@", user.uid];
+        NSString *userID = user.uid;
+        FIRDatabaseReference *userInfo = [[[Request dataref] child:@"users"]child: userID];
+        //FIRDatabaseReference *ref = [Request dataref];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            [userInfo observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                if (snapshot.exists) {
+                    app.user = [[UserInfo alloc]init];
+                    NSDictionary *dic = snapshot.value;
+                    app.user.name = [dic objectForKey:@"name"];
+                    app.user.userId = userID;
+                    app.user.email = [dic objectForKey:@"email"];
+                    app.user.photoURL = [NSURL URLWithString:[dic objectForKey:@"photourl"]];
+                    app.user.numberOfComments = [dic objectForKey:@"numberofcomments"];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        //go maim workspace
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [self.view setUserInteractionEnabled:YES];
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];/////
+                        [self.view setUserInteractionEnabled:YES];
+                        // go to main view
+                        SWRevealViewController *swRevealViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+                        [self presentViewController:swRevealViewController animated:YES completion:nil];
+                        
+                    });
+                    
+                }else{
+                    UIAlertController * loginErrorAlert = [UIAlertController
+                                                           alertControllerWithTitle:@"Cannot find your info"
+                                                           message:@"cannot access your info. please try again."
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+                    [self presentViewController:loginErrorAlert animated:YES completion:nil];
+                    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [self.view setUserInteractionEnabled:YES];
+                        [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
+                    }];
+                    [loginErrorAlert addAction:ok];
+                    
+                }
+            }];
+        });
+        
+    }
+}
 -(void)playSound:fileName{
     
     
@@ -237,5 +294,25 @@
 }
 
 
+// Called when the UIKeyboardWillHideNotification is sent
 
+- (void)keyboardWasShown:(NSNotification *)aNotification {
+    NSDictionary *info = aNotification.userInfo;
+    CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGPoint viewOrigin = self.view.frame.origin;
+    
+    CGSize viewSize = self.view.frame.size;
+    viewOrigin.y = [UIScreen mainScreen].bounds.size.height - viewSize.height - kbSize.height;
+    [self.view setFrame:CGRectMake(viewOrigin.x, viewOrigin.y, viewSize.width, viewSize.height)];
+}
+- (void)keyboardBeHidden:(NSNotification *)aNotification {
+    NSDictionary *info = aNotification.userInfo;
+    CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGPoint viewOrigin = self.view.frame.origin;
+    
+    CGSize viewSize = self.view.frame.size;
+    viewOrigin.y = viewOrigin.y + kbSize.height;
+    
+    [self.view setFrame:CGRectMake(viewOrigin.x, viewOrigin.y, viewSize.width, viewSize.height)];
+}
 @end

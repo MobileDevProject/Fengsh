@@ -5,6 +5,8 @@
 //  Created by Theodor Hedin on 11/1/16.
 //  Copyright © 2016 Theodor Swedenborg. All rights reserved.
 //
+@import Firebase;
+#import <AVFoundation/AVFoundation.h>
 #import "SWRevealViewController.h"
 #import "commentContentsViewController.h"
 
@@ -35,5 +37,25 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
+}
+//Add Sound on click
+-(void)playSound:fileName{
+    
+    
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"mp3"];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:soundPath], &soundID);
+    AudioServicesPlaySystemSound(soundID);
+    
+}
+//show the side bar
+- (IBAction)goSideMenu:(UIButton *)sender {
+    [self.navigationController.revealViewController rightRevealToggle:nil];
+    [self playSound:@"forwardButton"];
+}
+
+- (IBAction)BackTo:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self playSound:@"backButton"];
 }
 @end

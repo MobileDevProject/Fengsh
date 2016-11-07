@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@import Firebase;
+#import "AppDelegate.h"
 @interface Request : NSObject
-
+//Firebase
++(void)getUser;
++ (NSString*)currentUserUid;
++(void)registerUser:name email:email image:image;
++ (FIRDatabaseReference*)dataref;
 @end

@@ -6,12 +6,14 @@
 //  Copyright © 2016 Theodor Swedenborg. All rights reserved.
 //
 @import Firebase;
+#import "Request.h"
 #import "AllDirectionBranchTableViewController.h"
 #import "AppDelegate.h"
 #import "totalMenuViewController.h"
 #import "GeoPointCompass.h"
 #import <CoreLocation/CoreLocation.h>
 #import "SWRevealViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
@@ -172,7 +174,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    
     geoPointCompass = [[GeoPointCompass alloc] init];
     
     // Add the image to be used as the compass on the GUI
@@ -579,19 +580,11 @@
     [self.navigationController pushViewController:DirectionBranchTableScreen animated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,     NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:@"savedImage.png"];
-    UIImage *theImage = [UIImage imageWithContentsOfFile:savedImagePath];
-    if (theImage) {
-        [self.imagePhoto setImage:theImage];
-    }else{
-        [self.imagePhoto setImage:[UIImage imageNamed:@"person0.jpg"]];
-        
-    }
+    [self.imagePhoto sd_setImageWithURL:app.user.photoURL
+                    placeholderImage:[UIImage imageNamed:@"Splash.png"]];
     
 
 }
