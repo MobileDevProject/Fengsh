@@ -85,6 +85,66 @@
     
     
 }
++(void)savePhoto:image{
+    
+    FIRUser *user = [FIRAuth auth].currentUser;
+    FIRUserProfileChangeRequest *changeRequest = [user profileChangeRequest];
+    NSString *userId = user.uid;
+    FIRStorage *storage = [FIRStorage storage];
+    FIRStorageReference *storageRef = [storage reference];
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        FIRStorageReference *photoImagesRef = [storageRef child:[NSString stringWithFormat:@"users photo/%@/photo.jpg", userId] ];
+        NSData *imageData = UIImagePNGRepresentation(image);
+        //register email
+        
+        //    [[FIRAuth auth] sendPasswordResetWithEmail:email
+        //                                    completion:^(NSError *_Nullable error) {
+        //                                        if (error) {
+        //                                            // An error happened.
+        //                                        } else {
+        //                                            // Password reset email sent.
+        //                                        }
+        //                                    }];
+        
+        //image compress until size < 1 MB
+        int count = 0;
+        while ([imageData length] > 1000000) {
+            imageData = UIImageJPEGRepresentation(image, powf(0.9, count));
+            count++;
+            NSLog(@"just shrunk it once.");
+        }
+        
+        // Upload the file to the path "images/userID.PNG"f
+        
+        [photoImagesRef putData:imageData metadata:nil completion:^(FIRStorageMetadata *metadata, NSError *error) {
+            if (error != nil) {
+                // Uh-oh, an error occurred!
+            } else {
+                // Metadata contains file metadata such as size, content-type, and download URL.
+                changeRequest.photoURL = metadata.downloadURL;
+                [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (error) {
+                            // An error happened.
+                            NSLog(@"%@", error.description);
+                        } else {
+                            // Profile updated.
+                            app.user.photoURL = metadata.downloadURL;
+                            [[[[[[FIRDatabase database] reference] child:@"users"] child:userId]child:@"photourl" ] setValue:metadata.downloadURL.absoluteString];
+                            
+                        }
+                        
+                    });
+                }];
+                
+            }
+        }];
+        
+    });
+    
+    
+}
 + (FIRDatabaseReference*)dataref{
     return [[FIRDatabase database] reference];
 }

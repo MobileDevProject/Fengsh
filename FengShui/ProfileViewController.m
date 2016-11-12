@@ -15,6 +15,7 @@
 #import "ProfileViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MBProgressHUD.h"
+#import "Request.h"
 @interface ProfileViewController ()//<UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *txtEmail;
 @property (weak, nonatomic) IBOutlet UITextField *txtPassword;
@@ -131,6 +132,7 @@
     
     [self.imgPersonPhoto setImage:image];
     [picker dismissModalViewControllerAnimated:YES];
+    [Request savePhoto:image];
     
 }
 

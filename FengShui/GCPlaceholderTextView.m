@@ -5,7 +5,7 @@
 //  Created by Guillaume Campagna on 10-11-16.
 //  Copyright 2010 LittleKiwi. All rights reserved.
 //
-
+#import "AppDelegate.h"
 #import "GCPlaceholderTextView.h"
 
 @interface GCPlaceholderTextView () 
@@ -98,9 +98,14 @@
 }
 
 - (void) endEditing:(NSNotification*) notification {
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
     if ([self.realText isEqualToString:@""] || self.realText == nil) {
         super.text = self.placeholder;
         self.textColor = self.placeholderColor;
+        
+        app.checkPost = false;
+    }else{
+        app.checkPost = true;
     }
 }
 

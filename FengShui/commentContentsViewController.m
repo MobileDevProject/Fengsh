@@ -6,8 +6,10 @@
 //  Copyright © 2016 Theodor Swedenborg. All rights reserved.
 //
 @import Firebase;
+#import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SWRevealViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "commentContentsViewController.h"
 
 @interface commentContentsViewController ()
@@ -21,11 +23,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    AppDelegate *app = [UIApplication sharedApplication].delegate;
     [self.view layoutIfNeeded];
     self.userPhoto.layer.cornerRadius = self.userPhoto.frame.size.height/2;
     self.userPhoto.clipsToBounds = YES;
     self.userPhoto.layer.borderWidth = 3.0f;
     self.userPhoto.layer.borderColor = [UIColor colorWithRed:87.0f/255.0f green:71.0f/255.0f blue:47.0f/255.0f alpha:1].CGColor;
+    self.userName.text = [app.commentDic objectForKey:@"name"];
+    self.commnt.text = [app.commentDic objectForKey:@"comment"];
+    [self.userPhoto sd_setImageWithURL:[app.commentDic objectForKey:@"photoURL"] placeholderImage:[UIImage imageNamed:@"person0.jpg"]];
     // Do any additional setup after loading the view.
 }
 
@@ -40,8 +46,6 @@
 }
 //Add Sound on click
 -(void)playSound:fileName{
-    
-    
     NSString *soundPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"mp3"];
     SystemSoundID soundID;
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:soundPath], &soundID);

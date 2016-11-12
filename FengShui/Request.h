@@ -15,4 +15,5 @@
 + (NSString*)currentUserUid;
 +(void)registerUser:name email:email image:image;
 + (FIRDatabaseReference*)dataref;
++(void)savePhoto:image;
 @end

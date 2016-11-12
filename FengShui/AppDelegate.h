@@ -10,6 +10,8 @@
 #import "UserInfo.h"
 @import Firebase;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+@property (nonatomic)BOOL checkPost;
+@property (nonatomic, retain)NSDictionary *commentDic;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) int NumberOfPhotos;

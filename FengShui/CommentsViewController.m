@@ -15,7 +15,7 @@
 #import "Request.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
-@interface CommentsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
+@interface CommentsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate>
 {
     NSMutableArray* subArrSnippetImageName;
     AppDelegate *app;
@@ -26,6 +26,7 @@
 @property (retain, nonatomic)NSArray *BranchURLs;
 @property (nonatomic) CGFloat lastContentOffset;
 @property (weak, nonatomic) IBOutlet GCPlaceholderTextView *textView;
+@property (weak, nonatomic) IBOutlet UIButton *postButton;
 
 @end
 
@@ -57,6 +58,8 @@
     NSString *testDate = @"2016-11-04 18:08:55";
     [self getUTCFormateDate:testDate];
     [self loadComments];
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRecognized:)];
+    [self.view addGestureRecognizer:panGesture];
 }
 
 //Add Sound on click
@@ -92,9 +95,15 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
+    
     NSDictionary *currentComment = [arrCommentsDic objectAtIndex:indexPath.row];
     static NSString *identifier = @"SubBranchCell2";
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    FIRDatabaseReference *ref = [[[Request dataref] child:@"users"]child:[currentComment  objectForKey:@"userid"]];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+
     //user photo
     UIImageView *userPhoto = (UIImageView*)[cell viewWithTag:101];
     //user name
@@ -106,13 +115,9 @@
     UILabel *agoTime = (UILabel*)[cell viewWithTag:104];
     agoTime.text = [self getUTCFormateDate:[currentComment objectForKey:@"date"]];
     
-    FIRDatabaseReference *ref = [[[Request dataref] child:@"users"]child:[currentComment  objectForKey:@"userid"]];
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-    [ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+    
             userName.text = [snapshot.value objectForKey:@"name"];
             //user photo
-            
             [self.view layoutIfNeeded];
             userPhoto.layer.cornerRadius = userPhoto.frame.size.height/2;
             userPhoto.clipsToBounds = YES;
@@ -161,22 +166,38 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSDictionary *currentComment = [arrCommentsDic objectAtIndex:indexPath.row];
+    FIRDatabaseReference *ref = [[[Request dataref] child:@"users"]child:[currentComment  objectForKey:@"userid"]];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                
+    NSString *name = [snapshot.value objectForKey:@"name"];
+                NSURL *photoURL = [NSURL URLWithString:[snapshot.value  objectForKey:@"photourl"]];
+    NSDictionary *currentComment = [arrCommentsDic objectAtIndex:indexPath.row];
+    NSString* comment = [currentComment objectForKey:@"contents"] ? [currentComment objectForKey:@"contents"] : @" ";
+    app.commentDic = @{
+                       @"name":name,
+                       @"photoURL":photoURL,
+                       @"comment":comment
+                       };
+
     [self playSound:@"m3"];
     app.SubBranchWebIndex = (int)indexPath.row ;
+    
     commentContentsViewController *CommentContentsViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"commentContentsViewController"];
     [self.navigationController pushViewController:CommentContentsViewController animated:YES];
+            });
+        }];
+        });
     
 }
--(void)viewWillAppear:(BOOL)animated{
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
-    
 
-
-}
 -(void)loadComments{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+        arrCommentsDic = [[NSMutableArray alloc]init];
         //get all comments
         NSString* commentPath = [NSString stringWithFormat:@"%@_%@_%d", app.strBranchName,app.BranchDirection, app.SubBranchIndex];
         FIRDatabaseReference* ref = [[[[FIRDatabase database] reference] child:@"comments"]child:commentPath];
@@ -185,7 +206,7 @@
             if (snapshot.exists) {
                 NSDictionary*dic = snapshot.value;
                 NSArray *keys;
-                arrCommentsDic = [[NSMutableArray alloc]init];
+                
                     keys = dic.allKeys;
                     for (NSString *tempKey in keys) {
                         [arrCommentsDic addObject:[dic objectForKey:tempKey]];
@@ -199,6 +220,13 @@
                     
                     arrCommentsDic = [[NSMutableArray alloc]initWithArray:[arrCommentsDic sortedArrayUsingDescriptors:@[descriptor]]];
                     [self.branchListTable reloadData];
+                    
+                    //go to last cell
+                    NSInteger section = 0;
+                    NSInteger item = [self collectionView:self.branchListTable numberOfItemsInSection:section] - 1;
+                    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:item inSection:section];
+                    [self.branchListTable scrollToItemAtIndexPath:lastIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
+
                 });
             }
             
@@ -250,9 +278,32 @@
 
 }
 
+- (void)panRecognized:(UIPanGestureRecognizer *)rec
+{
+    
+    
+    CGPoint point = [rec locationInView:self.view];
+    
+    if (rec.state == UIGestureRecognizerStateEnded)
+    {
+        // user dragged towards the right
+        if (point.y>self.lastContentOffset) {
+            [self.textView resignFirstResponder];
+        }
+    }
+    else if(rec.state == UIGestureRecognizerStateBegan)
+    {
+        // user dragged towards the left
+        self.lastContentOffset = point.y;
+    }
+    
+}
 - (IBAction)writeComment:(UIButton *)sender {
 
         //post comment
+    if (![self.textView.text isEqualToString:@""]) {
+        
+
         NSString* commentPath = [NSString stringWithFormat:@"%@_%@_%d", app.strBranchName,app.BranchDirection, app.SubBranchIndex];
         FIRDatabaseReference* ref = [[[[[FIRDatabase database] reference] child:@"comments"]child:commentPath]child:[NSString stringWithFormat:@"%@%@",app.user.userId,app.user.numberOfComments]];
     //register date
@@ -268,13 +319,37 @@
                                    @"contents":self.textView.text
                                    };
     //write
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
     [ref updateChildValues:commentDict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
+        dispatch_async(dispatch_get_main_queue(), ^{
         [NSString stringWithFormat:@"%d", [app.user.numberOfComments intValue] + 1];
         FIRDatabaseReference *userNumberOfComments = [[[[FIRDatabase database] reference] child:@"users"]child:app.user.userId];
-        [userNumberOfComments updateChildValues:@{@"numberofcomments":[NSString stringWithFormat:@"%d", ([app.user.numberOfComments intValue] + 1)]}];
-        
+            [userNumberOfComments updateChildValues:@{@"numberofcomments":[NSString stringWithFormat:@"%d", ([app.user.numberOfComments intValue] + 1)]}];
+        [arrCommentsDic addObject:commentDict];
+        [self.branchListTable reloadData];
+            
+            //go to last cell
+            NSInteger section = 0;
+            
+            NSInteger item = [self collectionView:self.branchListTable numberOfItemsInSection:section] - 1;
+            if (item>=0) {
+                NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:item inSection:section];
+                [self.branchListTable scrollToItemAtIndexPath:lastIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
+            }
+            
+            self.textView.text= @"";
+        });
     }];
+    });
+    }
+}
+-(void)viewWillAppear:(BOOL)animated{
+    self.textView.text= @"";
+
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [self.textView resignFirstResponder];
+}
 
 @end

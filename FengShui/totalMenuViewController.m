@@ -25,7 +25,7 @@
     GeoPointCompass *geoPointCompass;
     
     CLLocationDirection currentDir;
-
+    BOOL checkphoto;
 
 }
 
@@ -355,6 +355,7 @@
     self.NorthWestBigMetal.transform = CGAffineTransformRotate(self.NorthWestBigMetal.transform, -M_PI/4);
     
     //[self.btnNorthColor layer].anchorPoint = CGPointMake(50/2, 50/2);
+    checkphoto = true;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -434,12 +435,15 @@
         didFinishPickingImage:(UIImage *)image
                   editingInfo:(NSDictionary *)editingInfo{
     
+    [Request savePhoto:image];
+    [self.imagePhoto setImage:image];
+    checkphoto = false;
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,     NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:@"savedImage.png"];
-    NSData *imageData = UIImagePNGRepresentation(image);
-    [imageData writeToFile:savedImagePath atomically:NO];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,     NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:@"savedImage.png"];
+//    NSData *imageData = UIImagePNGRepresentation(image);
+//    [imageData writeToFile:savedImagePath atomically:NO];
     [picker dismissModalViewControllerAnimated:YES];
     
 }
@@ -580,12 +584,17 @@
     [self.navigationController pushViewController:DirectionBranchTableScreen animated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    AppDelegate *app = [UIApplication sharedApplication].delegate;
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
-    [self.imagePhoto sd_setImageWithURL:app.user.photoURL
-                    placeholderImage:[UIImage imageNamed:@"Splash.png"]];
-    
+    if (checkphoto) {
+        AppDelegate *app = [UIApplication sharedApplication].delegate;
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
+        [self.imagePhoto sd_setImageWithURL:app.user.photoURL
+                           placeholderImage:[UIImage imageNamed:@"Splash.png"]];
+        
+    }
+    //it comes from image picker
+    checkphoto = true;
+
 
 }
 

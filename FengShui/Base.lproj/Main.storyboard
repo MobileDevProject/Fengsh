@@ -17,9 +17,6 @@
         <array key="AvenirNextLTPro-Medium_0.ttf">
             <string>AvenirNextLTPro-Medium</string>
         </array>
-        <array key="GRAYSTROKE ITALIC.otf">
-            <string>GRAYSTROKE-Italic</string>
-        </array>
         <array key="GRAYSTROKE REGULAR.otf">
             <string>GRAYSTROKE</string>
         </array>
@@ -1194,7 +1191,7 @@
                 <navigationController storyboardIdentifier="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="d7y-ID-Efq" sceneMemberID="viewController">
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NkG-XQ-63m">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="NkG-XQ-63m">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1212,7 +1209,7 @@
                 <navigationController navigationBarHidden="YES" id="shm-F6-tfN" sceneMemberID="viewController">
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mNn-yL-c3A">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="mNn-yL-c3A">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1740,7 +1737,7 @@ This way it helps users to search for related items by simply using this app.</s
                 <navigationController navigationBarHidden="YES" id="YcT-3Z-mSY" sceneMemberID="viewController">
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pKK-UY-bt0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pKK-UY-bt0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2642,9 +2639,17 @@ This way it helps users to search for related items by simply using this app.</s
                                             <action selector="writeComment:" destination="YAo-gt-fjh" eventType="touchUpInside" id="Yp3-kI-wlA"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pen.png" translatesAutoresizingMaskIntoConstraints="NO" id="x0Y-1i-fbh">
+                                        <rect key="frame" x="8" y="11.5" width="32" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="x0Y-1i-fbh" secondAttribute="height" multiplier="32:37" id="eh9-kh-9ei"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="x0Y-1i-fbh" firstAttribute="leading" secondItem="SJa-bF-W04" secondAttribute="leading" constant="8" id="A7g-mv-ZIW"/>
+                                    <constraint firstItem="x0Y-1i-fbh" firstAttribute="centerY" secondItem="SJa-bF-W04" secondAttribute="centerY" id="Nps-RR-5zl"/>
                                     <constraint firstItem="ajS-Nw-ZSJ" firstAttribute="leading" secondItem="SJa-bF-W04" secondAttribute="leading" constant="48" id="REu-EN-ofv"/>
                                     <constraint firstItem="OHm-5r-Rml" firstAttribute="centerY" secondItem="SJa-bF-W04" secondAttribute="centerY" id="Srl-as-NRZ"/>
                                     <constraint firstItem="OHm-5r-Rml" firstAttribute="leading" secondItem="ajS-Nw-ZSJ" secondAttribute="trailing" constant="16" id="UXm-J1-uu2"/>
@@ -2653,6 +2658,7 @@ This way it helps users to search for related items by simply using this app.</s
                                     <constraint firstAttribute="height" constant="60" id="bQW-9h-sfz"/>
                                     <constraint firstItem="ajS-Nw-ZSJ" firstAttribute="top" secondItem="SJa-bF-W04" secondAttribute="top" constant="15" id="cdB-qw-zD8"/>
                                     <constraint firstAttribute="trailing" secondItem="OHm-5r-Rml" secondAttribute="trailing" constant="8" id="eee-Va-fFa"/>
+                                    <constraint firstItem="ajS-Nw-ZSJ" firstAttribute="leading" secondItem="x0Y-1i-fbh" secondAttribute="trailing" constant="8" id="hhW-J6-wj1"/>
                                     <constraint firstItem="XUL-Zy-qL9" firstAttribute="width" secondItem="SJa-bF-W04" secondAttribute="width" id="vdd-m3-f2s"/>
                                 </constraints>
                             </view>
@@ -2674,6 +2680,7 @@ This way it helps users to search for related items by simply using this app.</s
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="branchListTable" destination="0hs-B9-yed" id="mZN-Rn-oO0"/>
+                        <outlet property="postButton" destination="OHm-5r-Rml" id="FaY-Qe-ci0"/>
                         <outlet property="textView" destination="ajS-Nw-ZSJ" id="UHx-Yk-QO9"/>
                     </connections>
                 </viewController>
@@ -2805,7 +2812,7 @@ This way it helps users to search for related items by simply using this app.</s
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="k3c-a8-ibZ"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="GRAYSTROKE-Italic" family="GRAYSTROKE" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="GRAYSTROKE" family="GRAYSTROKE" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -2866,6 +2873,7 @@ This way it helps users to search for related items by simply using this app.</s
         <image name="compass.png" width="702" height="702"/>
         <image name="home_Background.png" width="750" height="1334"/>
         <image name="logOut.png" width="39" height="28"/>
+        <image name="pen.png" width="512" height="512"/>
         <image name="photo_line.png" width="650" height="1"/>
         <image name="profile.png" width="32" height="35"/>
         <image name="signScreen_Background.png" width="750" height="1334"/>
