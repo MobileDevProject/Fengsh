@@ -194,11 +194,11 @@
 		F328BC831DCE578500EA1F76 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F328BC821DCE578500EA1F76 /* UserInfo.m */; };
 		F341EFFB1DCBA3DF00FF19B3 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = F341EFFA1DCBA3DF00FF19B3 /* Request.m */; };
 		F34C96921DCA92EA0096A897 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F34C96911DCA92EA0096A897 /* GoogleService-Info.plist */; };
+		F38362E31DD8FE4900C8A3D6 /* pen.png in Resources */ = {isa = PBXBuildFile; fileRef = F38362E21DD8FE4900C8A3D6 /* pen.png */; };
 		F38A16CD1DC7B876004B499F /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = F38A16CC1DC7B876004B499F /* comment.png */; };
 		F38A17071DC7FF64004B499F /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F38A17061DC7FF64004B499F /* CommentsViewController.m */; };
 		F38A170A1DC8211D004B499F /* GCPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F38A17091DC8211D004B499F /* GCPlaceholderTextView.m */; };
 		F38A170D1DC84559004B499F /* commentContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F38A170C1DC84559004B499F /* commentContentsViewController.m */; };
-		F3B681E71DD6537D003600CA /* pen.png in Resources */ = {isa = PBXBuildFile; fileRef = F3B681E61DD6537D003600CA /* pen.png */; };
 		FCCFC01605D9828EBA850BCF /* libPods-FengShuiUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CE60BCB3D02DA6DCA8C330 /* libPods-FengShuiUITests.a */; };
 /* End PBXBuildFile section */
 
@@ -438,6 +438,7 @@
 		F341EFF91DCBA3DF00FF19B3 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
 		F341EFFA1DCBA3DF00FF19B3 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
 		F34C96911DCA92EA0096A897 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F38362E21DD8FE4900C8A3D6 /* pen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pen.png; sourceTree = "<group>"; };
 		F38A16CC1DC7B876004B499F /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
 		F38A17051DC7FF64004B499F /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
 		F38A17061DC7FF64004B499F /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
@@ -445,7 +446,6 @@
 		F38A17091DC8211D004B499F /* GCPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlaceholderTextView.m; sourceTree = "<group>"; };
 		F38A170B1DC84559004B499F /* commentContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentContentsViewController.h; sourceTree = "<group>"; };
 		F38A170C1DC84559004B499F /* commentContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commentContentsViewController.m; sourceTree = "<group>"; };
-		F3B681E61DD6537D003600CA /* pen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pen.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -545,7 +545,7 @@
 		8C071D2F1D67755C00C33F56 /* png */ = {
 			isa = PBXGroup;
 			children = (
-				F3B681E61DD6537D003600CA /* pen.png */,
+				F38362E21DD8FE4900C8A3D6 /* pen.png */,
 				F38A16CC1DC7B876004B499F /* comment.png */,
 				8C558C021D6E9AF5001F947A /* icon */,
 				8C06C4081D6CE01D0009E9CC /* slide menu */,
@@ -1206,7 +1206,7 @@
 				8CC3F40D1D6B9B0B00F76FF6 /* East_Color3.jpg in Resources */,
 				8C558C0F1D6E9AF5001F947A /* Icon-29.png in Resources */,
 				8CFECE361D73D08E005CCE86 /* forwardButton.mp3 in Resources */,
-				F3B681E71DD6537D003600CA /* pen.png in Resources */,
+				F38362E31DD8FE4900C8A3D6 /* pen.png in Resources */,
 				8CC3F42E1D6B9B0B00F76FF6 /* SouthWest_BigEarth3.jpg in Resources */,
 				8C90DE211D70B834004717BD /* AvenirNextLTPro-Medium_0.ttf in Resources */,
 				8CC3F41C1D6B9B0B00F76FF6 /* South_Color3.jpg in Resources */,

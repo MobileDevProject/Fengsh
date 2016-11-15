@@ -145,6 +145,13 @@
     
     
 }
+
++(void)updateTime:direction updatedTime:updatedTime{
+    FIRDatabaseReference *updatedTimeRef = [[[self dataref] child:@"updatedTime"]child:direction];
+    [updatedTimeRef setValue:updatedTime];
+    
+}
+
 + (FIRDatabaseReference*)dataref{
     return [[FIRDatabase database] reference];
 }

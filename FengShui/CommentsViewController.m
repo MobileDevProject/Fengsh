@@ -27,6 +27,10 @@
 @property (nonatomic) CGFloat lastContentOffset;
 @property (weak, nonatomic) IBOutlet GCPlaceholderTextView *textView;
 @property (weak, nonatomic) IBOutlet UIButton *postButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topSpaceOfTopBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomSpace;
+
+
 
 @end
 
@@ -55,8 +59,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     //test part
-    NSString *testDate = @"2016-11-04 18:08:55";
-    [self getUTCFormateDate:testDate];
     [self loadComments];
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRecognized:)];
     [self.view addGestureRecognizer:panGesture];
@@ -101,7 +103,7 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     FIRDatabaseReference *ref = [[[Request dataref] child:@"users"]child:[currentComment  objectForKey:@"userid"]];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             dispatch_async(dispatch_get_main_queue(), ^{
 
     //user photo
@@ -125,11 +127,14 @@
             userPhoto.layer.borderColor = [UIColor colorWithRed:87.0f/255.0f green:71.0f/255.0f blue:47.0f/255.0f alpha:1].CGColor;
             [userPhoto sd_setImageWithURL:[NSURL URLWithString:[snapshot.value  objectForKey:@"photourl"]]
                          placeholderImage:[UIImage imageNamed:@"person0.jpg"]];
+                
+                
         });
      }];
     });
+    
     return cell;
-
+    
     
 }
 -(NSString *)getUTCFormateDate:(NSString *)registerDate
@@ -196,13 +201,14 @@
 }
 
 -(void)loadComments{
+    [self.view layoutIfNeeded];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         arrCommentsDic = [[NSMutableArray alloc]init];
         //get all comments
         NSString* commentPath = [NSString stringWithFormat:@"%@_%@_%d", app.strBranchName,app.BranchDirection, app.SubBranchIndex];
         FIRDatabaseReference* ref = [[[[FIRDatabase database] reference] child:@"comments"]child:commentPath];
         [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-            
+            [self.view layoutIfNeeded];
             if (snapshot.exists) {
                 NSDictionary*dic = snapshot.value;
                 NSArray *keys;
@@ -214,44 +220,65 @@
             
 
             
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
+//
+                
                     NSSortDescriptor* descriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
-                    
                     arrCommentsDic = [[NSMutableArray alloc]initWithArray:[arrCommentsDic sortedArrayUsingDescriptors:@[descriptor]]];
-                    [self.branchListTable reloadData];
-                    
-                    //go to last cell
-                    NSInteger section = 0;
-                    NSInteger item = [self collectionView:self.branchListTable numberOfItemsInSection:section] - 1;
-                    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:item inSection:section];
-                    [self.branchListTable scrollToItemAtIndexPath:lastIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
+                
+                //NSLog(@"%@", arrCommentsDic);
+                
 
+                    //go to last cell
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.branchListTable reloadData];
+                    [self goToLastCell];
+                    
                 });
             }
             
         }];
-        
+    
+
     });
 }
+-(void)goToLastCell{
+    [self.view layoutIfNeeded];
+    NSInteger section = 0;
+    NSInteger item = arrCommentsDic.count - 1;
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:item inSection:section];
+    [self.branchListTable scrollToItemAtIndexPath:lastIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+    
+}
+
 - (void)keyboardWasShown:(NSNotification *)aNotification {
     NSDictionary *info = aNotification.userInfo;
     CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    CGPoint viewOrigin = self.view.frame.origin;
+//    CGPoint viewOrigin = self.view.frame.origin;
+//    
+//    CGSize viewSize = self.view.frame.size;
+//    viewOrigin.y = [UIScreen mainScreen].bounds.size.height - viewSize.height - kbSize.height;
+//    [self.view setFrame:CGRectMake(viewOrigin.x, viewOrigin.y, viewSize.width, viewSize.height)];
     
-    CGSize viewSize = self.view.frame.size;
-    viewOrigin.y = [UIScreen mainScreen].bounds.size.height - viewSize.height - kbSize.height;
-    [self.view setFrame:CGRectMake(viewOrigin.x, viewOrigin.y, viewSize.width, viewSize.height)];
+    //self.topSpaceOfTopBar.constant = kbSize.height;
+    //[self.branchListTable setBounds:CGRectMake(0, 0, self.branchListTable.bounds.size.width, self.branchListTable.bounds.size.height - kbSize.height) ];
+    self.bottomSpace.constant = kbSize.height;
+    [self goToLastCell];
 }
 - (void)keyboardBeHidden:(NSNotification *)aNotification {
     NSDictionary *info = aNotification.userInfo;
     CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    CGPoint viewOrigin = self.view.frame.origin;
+//    CGPoint viewOrigin = self.view.frame.origin;
+//    
+//    CGSize viewSize = self.view.frame.size;
+//    viewOrigin.y = viewOrigin.y + kbSize.height;
+//    
+//    [self.view setFrame:CGRectMake(viewOrigin.x, viewOrigin.y, viewSize.width, viewSize.height)];
+    //self.topSpaceOfTopBar.constant = 0;
+    //[self.branchListTable setBounds:CGRectMake(0, 0, self.branchListTable.bounds.size.width, self.branchListTable.bounds.size.height + kbSize.height) ];
+    self.bottomSpace.constant = 0;
+    [self goToLastCell];
     
-    CGSize viewSize = self.view.frame.size;
-    viewOrigin.y = viewOrigin.y + kbSize.height;
-    
-    [self.view setFrame:CGRectMake(viewOrigin.x, viewOrigin.y, viewSize.width, viewSize.height)];
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(collectionView.frame.size.width, 60);
@@ -338,6 +365,8 @@
             }
             
             self.textView.text= @"";
+            //set update time
+            [Request updateTime:[NSString stringWithFormat:@"%@_%@",app.BranchDirection, app.strBranchName] updatedTime:timeStamp];
         });
     }];
     });

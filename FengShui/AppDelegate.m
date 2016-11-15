@@ -166,6 +166,34 @@
         _NorthWest_Direction = @"NorthWest";
     }
     
+    //define direction name array
+    self.directionNameArray = [[NSArray alloc]initWithObjects:
+                               [NSString stringWithFormat:@"%@_%@",_North_Direction, _North_Water],
+                               [NSString stringWithFormat:@"%@_%@",_North_Direction, _North_Color],
+                               [NSString stringWithFormat:@"%@_%@",_North_Direction, _North_Career],
+                               [NSString stringWithFormat:@"%@_%@",_South_Direction, _South_Fire],
+                               [NSString stringWithFormat:@"%@_%@",_South_Direction, _South_Color],
+                               [NSString stringWithFormat:@"%@_%@",_South_Direction, _South_Recognition],
+                               [NSString stringWithFormat:@"%@_%@",_East_Direction, _East_Color],
+                               [NSString stringWithFormat:@"%@_%@",_East_Direction, _East_Family],
+                               [NSString stringWithFormat:@"%@_%@",_East_Direction, _East_BigWood],
+                               [NSString stringWithFormat:@"%@_%@",_West_Direction, _West_Color],
+                               [NSString stringWithFormat:@"%@_%@",_West_Direction, _West_Dependance],
+                               [NSString stringWithFormat:@"%@_%@",_West_Direction, _West_SmallMetal],
+                               [NSString stringWithFormat:@"%@_%@",_NorthEast_Direction, _NorthEast_Color],
+                               [NSString stringWithFormat:@"%@_%@",_NorthEast_Direction, _NorthEast_Education],
+                               [NSString stringWithFormat:@"%@_%@",_NorthEast_Direction, _NorthEast_SmallEarth],
+                               [NSString stringWithFormat:@"%@_%@",_SouthEast_Direction, _SouthEast_Color],
+                               [NSString stringWithFormat:@"%@_%@",_SouthEast_Direction, _SouthEast_Wealth],
+                               [NSString stringWithFormat:@"%@_%@",_SouthEast_Direction, _SouthEast_SmallWood],
+                               [NSString stringWithFormat:@"%@_%@",_SouthWest_Direction, _SouthWest_Color],
+                               [NSString stringWithFormat:@"%@_%@",_SouthWest_Direction, _SouthWest_BigEarth],
+                               [NSString stringWithFormat:@"%@_%@",_SouthWest_Direction, _SouthWest_Marriage],
+                               [NSString stringWithFormat:@"%@_%@",_NorthWest_Direction, _NorthWest_Color],
+                               [NSString stringWithFormat:@"%@_%@",_NorthWest_Direction, _NorthWest_Mentors],
+                               [NSString stringWithFormat:@"%@_%@",_NorthWest_Direction, _NorthWest_BigMetal],
+                               nil];
+    
     
     NSArray *NorthCareerURLAs = [[NSMutableArray alloc]initWithObjects:[NSString stringWithFormat:@"%@", @"http://fengshui.about.com/od/careerandbusinessfaq/f/Feng-Shui-Tips-Attract-Career-Success.htm"], [NSString stringWithFormat:@"%@", @"http://www.knowfengshui.com/feng-shui-career-success-tips/"], [NSString stringWithFormat:@"%@", @"http://www.sheknows.com/home-and-gardening/articles/1038825/boost-your-career-success-by-decorating-with-black"] , [NSString stringWithFormat:@"%@", @"https://www.linkedin.com/pulse/11-feng-shui-tips-help-you-advance-your-career-make-more-keith-weber"],[NSString stringWithFormat:@"%@", @"http://feng-shui.lovetoknow.com/How_to_Feng_Shui_the_Bedroom_Career_Money"],[NSString stringWithFormat:@"%@", @"https://www.msfengshui.com/feng-shui-bagua/career-business-life-path"],[NSString stringWithFormat:@"%@", @"http://www.care2.com/greenliving/6-feng-shui-enhancements-for-your-career.html"],[NSString stringWithFormat:@"%@", @"http://redlotusletter.com/feng-shui-first-aid-for-your-career-14-ideas-to-enhance-your-home-and-office-for-greater-job-security/"],[NSString stringWithFormat:@"%@", @"http://www.thedeliciousday.com/minimalism-2/feng-shui-for-career-job/"],[NSString stringWithFormat:@"%@", @"http://www.karenrauchcarter.com/feng-shui-101/feng-shui-and-your-career/"],[NSString stringWithFormat:@"%@", @"http://www.feng-shui-and-beyond.com/feng-shui-career.html"], [NSString stringWithFormat:@"%@", @"http://schoolworkhelper.net/feng-shui-purpose-influence/"], nil];
     

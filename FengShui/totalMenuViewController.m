@@ -23,30 +23,44 @@
 
     CLLocationManager* locationManager;
     GeoPointCompass *geoPointCompass;
-    
+    AppDelegate *app;
     CLLocationDirection currentDir;
     BOOL checkphoto;
+    NSDictionary *directionButtons;
 
 }
 
+@property (weak, nonatomic) IBOutlet UIButton *btnNorthCareer;
+@property (weak, nonatomic) IBOutlet UIButton *btnNorthColor;
+@property (weak, nonatomic) IBOutlet UIButton *btnNorthWater;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnEastFamily;
+@property (weak, nonatomic) IBOutlet UIButton *btnEastColor;
+@property (weak, nonatomic) IBOutlet UIButton *btnEastBigWood;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnSouthColor;
+@property (weak, nonatomic) IBOutlet UIButton *btnSouthFire;
+@property (weak, nonatomic) IBOutlet UIButton *btnSouthRecognition;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnWestDependance;
+@property (weak, nonatomic) IBOutlet UIButton *btnWestColor;
+@property (weak, nonatomic) IBOutlet UIButton *btnWestSmallMetal;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthEastSmallEarth;
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthEastBeige;
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthEastEducation;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnSouthEastWealth;
-@property (weak, nonatomic) IBOutlet UIButton *SouthEastColor;
-@property (weak, nonatomic) IBOutlet UIButton *SouthEastSmallWood;
+@property (weak, nonatomic) IBOutlet UIButton *btnSouthEastColor;
+@property (weak, nonatomic) IBOutlet UIButton *btnSouthEastSmallWood;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSouthWestMarriage;
+@property (weak, nonatomic) IBOutlet UIButton *btnSouthWestColor;
+@property (weak, nonatomic) IBOutlet UIButton *btnSouthWestBigEarth;
 
-@property (weak, nonatomic) IBOutlet UIButton *SouthWestMarriage;
-@property (weak, nonatomic) IBOutlet UIButton *SouthWestColor;
-@property (weak, nonatomic) IBOutlet UIButton *SouthWestBigEarth;
-
-@property (weak, nonatomic) IBOutlet UIButton *NorthWestMentors;
-@property (weak, nonatomic) IBOutlet UIButton *NorthWestColor;
-@property (weak, nonatomic) IBOutlet UIButton *NorthWestBigMetal;
-
+@property (weak, nonatomic) IBOutlet UIButton *btnNorthWestMentors;
+@property (weak, nonatomic) IBOutlet UIButton *btnNorthWestColor;
+@property (weak, nonatomic) IBOutlet UIButton *btnNorthWestBigMetal;
 
 @property (weak, nonatomic) IBOutlet UIView *MenuView;
 @property (weak, nonatomic) IBOutlet UIButton *btnPersonPhoto;
@@ -173,9 +187,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    geoPointCompass = [[GeoPointCompass alloc] init];
     
+    geoPointCompass = [[GeoPointCompass alloc] init];
     // Add the image to be used as the compass on the GUI
     [geoPointCompass setRotateView:_MenuView];
     //permission to use camera
@@ -203,6 +216,7 @@
          }];
     }
     
+    //register all buttons in dictionary
     
     
     
@@ -225,7 +239,7 @@
 //        }];
 
     [self.view layoutIfNeeded];
-    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    app = [UIApplication sharedApplication].delegate;
     self.imagePhoto.layer.cornerRadius = self.imagePhoto.frame.size.height/2;
     self.imagePhoto.clipsToBounds = YES;
     self.imagePhoto.layer.borderWidth = 3.0f;
@@ -343,16 +357,16 @@
     
     
     self.btnSouthEastWealth.transform = CGAffineTransformRotate(self.btnSouthEastWealth.transform, -M_PI/4);
-    self.SouthEastColor.transform = CGAffineTransformRotate(self.SouthEastColor.transform, -M_PI/4);
-    self.SouthEastSmallWood.transform = CGAffineTransformRotate(self.SouthEastSmallWood.transform, -M_PI/4);
+    self.btnSouthEastColor.transform = CGAffineTransformRotate(self.btnSouthEastColor.transform, -M_PI/4);
+    self.btnSouthEastSmallWood.transform = CGAffineTransformRotate(self.btnSouthEastSmallWood.transform, -M_PI/4);
     
-    self.SouthWestMarriage.transform = CGAffineTransformRotate(self.SouthWestMarriage.transform, M_PI/4);
-    self.SouthWestColor.transform = CGAffineTransformRotate(self.SouthWestColor.transform, M_PI/4);
-    self.SouthWestBigEarth.transform = CGAffineTransformRotate(self.SouthWestBigEarth.transform, M_PI/4);
+    self.btnSouthWestMarriage.transform = CGAffineTransformRotate(self.btnSouthWestMarriage.transform, M_PI/4);
+    self.btnSouthWestColor.transform = CGAffineTransformRotate(self.btnSouthWestColor.transform, M_PI/4);
+    self.btnSouthWestBigEarth.transform = CGAffineTransformRotate(self.btnSouthWestBigEarth.transform, M_PI/4);
     
-    self.NorthWestMentors.transform = CGAffineTransformRotate(self.NorthWestMentors.transform, -M_PI/4);
-    self.NorthWestColor.transform = CGAffineTransformRotate(self.NorthWestColor.transform, -M_PI/4);
-    self.NorthWestBigMetal.transform = CGAffineTransformRotate(self.NorthWestBigMetal.transform, -M_PI/4);
+    self.btnNorthWestMentors.transform = CGAffineTransformRotate(self.btnNorthWestMentors.transform, -M_PI/4);
+    self.btnNorthWestColor.transform = CGAffineTransformRotate(self.btnNorthWestColor.transform, -M_PI/4);
+    self.btnNorthWestBigMetal.transform = CGAffineTransformRotate(self.btnNorthWestBigMetal.transform, -M_PI/4);
     
     //[self.btnNorthColor layer].anchorPoint = CGPointMake(50/2, 50/2);
     checkphoto = true;
@@ -574,7 +588,7 @@
 }
 
 -(void)goToBranchDirection:(NSString*)BranchName Branch_count:(int)branchCount Branch_ImageNumber:(int)BranchImageNumber Branch_Direction:(NSString*)Branch_Direction Branch_Color:(UIColor*)Branch_Color{
-    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    
     app.strBranchName = BranchName;
     app.Branch_Count = branchCount;
     app.Branch_Image_Number = BranchImageNumber;
@@ -582,10 +596,11 @@
     app.Branch_Color = Branch_Color;
     AllDirectionBranchTableViewController *DirectionBranchTableScreen = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AllDirectionBranchTableViewController"];
     [self.navigationController pushViewController:DirectionBranchTableScreen animated:YES];
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     if (checkphoto) {
-        AppDelegate *app = [UIApplication sharedApplication].delegate;
+        app = [UIApplication sharedApplication].delegate;
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
         [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
         [self.imagePhoto sd_setImageWithURL:app.user.photoURL
@@ -594,10 +609,83 @@
     }
     //it comes from image picker
     checkphoto = true;
+    [self checkViewedTime];
+    [self registerAllButtons];
+}
+
+-(void)checkViewedTime{
+    FIRDatabaseReference *updatedTimeRef = [[Request dataref] child:@"updatedTime"];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [updatedTimeRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (snapshot.exists) {
+                    for (NSString* key in snapshot.value) {
+                        
+                        if(![[NSUserDefaults standardUserDefaults] boolForKey:key]) {
+                            //do initialization stuff here...
+                            NSString *viewedTime = [[NSUserDefaults standardUserDefaults]
+                                                      stringForKey:key];
+                            
+                            NSString *updatedTime = [snapshot.value objectForKey:key];
+                            
+                            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                            dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+                            NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+                            [dateFormatter setTimeZone:gmt];
+                            if (!viewedTime) {
+                                viewedTime = [dateFormatter stringFromDate:[NSDate date]];
+                                [[NSUserDefaults standardUserDefaults] setObject:viewedTime forKey:key];
+                                [[NSUserDefaults standardUserDefaults] synchronize];
+                            }
+                            UIButton *testButton = (UIButton*)[directionButtons objectForKey:key];
+                            int testTag = testButton.tag;
+                            //if viewtime < updatedtime
+                            if ([[dateFormatter dateFromString:viewedTime] compare:[dateFormatter dateFromString:updatedTime]] == NSOrderedAscending) {
+                                //[(UIButton*)[directionButtons objectForKey:key] setBackgroundImage:[UIImage imageNamed:@"pen.png"] forState:UIControlStateNormal];
+                            }else{
+                                //[(UIButton*)[directionButtons objectForKey:key] setBackgroundImage:nil forState:UIControlStateNormal];
+                            }
+                            
+                        }
+                    }
+                }
+                
+            });
+        }];
+    });
+        
 
 
 }
 
 
-
+-(void)registerAllButtons{
+    
+    directionButtons = [[NSDictionary alloc]initWithObjectsAndKeys:
+                        self.btnNorthWater,app.directionNameArray[0],
+                        self.btnNorthColor,app.directionNameArray[1],
+                        self.btnNorthCareer,app.directionNameArray[2],
+                        self.btnSouthFire,app.directionNameArray[3],
+                        self.btnSouthColor,app.directionNameArray[4],
+                        self.btnSouthRecognition,app.directionNameArray[5],
+                        self.btnEastColor,app.directionNameArray[6],
+                        self.btnEastFamily,app.directionNameArray[7],
+                        self.btnEastBigWood,app.directionNameArray[8],
+                        self.btnWestColor,app.directionNameArray[9],
+                        self.btnWestDependance,app.directionNameArray[10],
+                        self.btnWestSmallMetal,app.directionNameArray[11],
+                        self.btnNorthEastBeige,app.directionNameArray[12],
+                        self.btnNorthEastEducation,app.directionNameArray[13],
+                        self.btnNorthEastSmallEarth,app.directionNameArray[14],
+                        self.btnSouthEastColor,app.directionNameArray[15],
+                        self.btnSouthEastWealth,app.directionNameArray[16],
+                        self.btnSouthEastSmallWood,app.directionNameArray[17],
+                        self.btnSouthWestColor,app.directionNameArray[18],
+                        self.btnSouthWestBigEarth,app.directionNameArray[19],
+                        self.btnSouthWestMarriage,app.directionNameArray[20],
+                        self.btnNorthWestColor,app.directionNameArray[21],
+                        self.btnNorthWestMentors,app.directionNameArray[22],
+                        self.btnNorthWestBigMetal,app.directionNameArray[23],
+                        nil];
+}
 @end

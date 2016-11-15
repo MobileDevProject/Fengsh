@@ -148,7 +148,17 @@
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
 }
-
+-(void)viewWillDisappear:(BOOL)animated{
+    // get current date
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    [dateFormatter setTimeZone:gmt];
+    NSString *timeStamp = [dateFormatter stringFromDate:[NSDate date]];
+    NSString* userdefaultkey = [NSString stringWithFormat:@"%@_%@", app.BranchDirection, app.strBranchName];
+    [[NSUserDefaults standardUserDefaults] setObject:timeStamp forKey:userdefaultkey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 @end
 
 

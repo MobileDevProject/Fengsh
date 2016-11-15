@@ -12,6 +12,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (nonatomic)BOOL checkPost;
 @property (nonatomic, retain)NSDictionary *commentDic;
+@property (nonatomic, retain)NSArray *directionNameArray;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) int NumberOfPhotos;

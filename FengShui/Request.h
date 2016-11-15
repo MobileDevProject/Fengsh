@@ -16,4 +16,5 @@
 +(void)registerUser:name email:email image:image;
 + (FIRDatabaseReference*)dataref;
 +(void)savePhoto:image;
++(void)updateTime:direction updatedTime:updatedTime;
 @end
