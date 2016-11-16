@@ -199,9 +199,15 @@
         });
     
 }
-
+-(void)collectionView:(UICollectionView*)collectionView willDisplayCell:(nonnull UICollectionViewCell *)cell forItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    if ([indexPath row]==((NSIndexPath*)[[collectionView indexPathsForVisibleItems] lastObject]).row) {
+        
+        [self goToLastCell];
+        [self.view setUserInteractionEnabled:YES];
+    }
+}
 -(void)loadComments{
-    [self.view layoutIfNeeded];
+    [self.view setUserInteractionEnabled:NO];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         arrCommentsDic = [[NSMutableArray alloc]init];
         //get all comments
@@ -217,24 +223,10 @@
                     for (NSString *tempKey in keys) {
                         [arrCommentsDic addObject:[dic objectForKey:tempKey]];
                     }
-            
-
-            
-//
                 
                     NSSortDescriptor* descriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
                     arrCommentsDic = [[NSMutableArray alloc]initWithArray:[arrCommentsDic sortedArrayUsingDescriptors:@[descriptor]]];
-                
-                //NSLog(@"%@", arrCommentsDic);
-                
-
-                    //go to last cell
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.branchListTable reloadData];
-                    [self goToLastCell];
-                    
-                });
+                [self.branchListTable reloadData];
             }
             
         }];
@@ -254,28 +246,12 @@
 - (void)keyboardWasShown:(NSNotification *)aNotification {
     NSDictionary *info = aNotification.userInfo;
     CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-//    CGPoint viewOrigin = self.view.frame.origin;
-//    
-//    CGSize viewSize = self.view.frame.size;
-//    viewOrigin.y = [UIScreen mainScreen].bounds.size.height - viewSize.height - kbSize.height;
-//    [self.view setFrame:CGRectMake(viewOrigin.x, viewOrigin.y, viewSize.width, viewSize.height)];
-    
-    //self.topSpaceOfTopBar.constant = kbSize.height;
-    //[self.branchListTable setBounds:CGRectMake(0, 0, self.branchListTable.bounds.size.width, self.branchListTable.bounds.size.height - kbSize.height) ];
     self.bottomSpace.constant = kbSize.height;
     [self goToLastCell];
 }
 - (void)keyboardBeHidden:(NSNotification *)aNotification {
     NSDictionary *info = aNotification.userInfo;
     CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-//    CGPoint viewOrigin = self.view.frame.origin;
-//    
-//    CGSize viewSize = self.view.frame.size;
-//    viewOrigin.y = viewOrigin.y + kbSize.height;
-//    
-//    [self.view setFrame:CGRectMake(viewOrigin.x, viewOrigin.y, viewSize.width, viewSize.height)];
-    //self.topSpaceOfTopBar.constant = 0;
-    //[self.branchListTable setBounds:CGRectMake(0, 0, self.branchListTable.bounds.size.width, self.branchListTable.bounds.size.height + kbSize.height) ];
     self.bottomSpace.constant = 0;
     [self goToLastCell];
     

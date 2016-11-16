@@ -637,8 +637,6 @@
                                 [[NSUserDefaults standardUserDefaults] setObject:viewedTime forKey:key];
                                 [[NSUserDefaults standardUserDefaults] synchronize];
                             }
-                            UIButton *testButton = (UIButton*)[directionButtons objectForKey:key];
-                            int testTag = testButton.tag;
                             //if viewtime < updatedtime
                             if ([[dateFormatter dateFromString:viewedTime] compare:[dateFormatter dateFromString:updatedTime]] == NSOrderedAscending) {
                                 //[(UIButton*)[directionButtons objectForKey:key] setBackgroundImage:[UIImage imageNamed:@"pen.png"] forState:UIControlStateNormal];
