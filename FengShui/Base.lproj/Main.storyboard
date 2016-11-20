@@ -757,28 +757,28 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GNu-M9-uMM">
-                                                    <rect key="frame" x="38" y="184" width="300" height="31"/>
+                                                    <rect key="frame" x="38" y="170" width="300" height="45"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_line.png" translatesAutoresizingMaskIntoConstraints="NO" id="AeO-Jb-Fx8">
-                                                            <rect key="frame" x="0.0" y="23" width="300" height="1"/>
+                                                            <rect key="frame" x="0.0" y="37" width="300" height="1"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="1" id="eim-HB-mWu"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Career - North" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJ8-WM-Gp5">
-                                                            <rect key="frame" x="1" y="0.0" width="300" height="21"/>
+                                                            <rect key="frame" x="1" y="0.0" width="300" height="35"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment.png" translatesAutoresizingMaskIntoConstraints="NO" id="CJN-UY-WLZ">
-                                                            <rect key="frame" x="278" y="0.0" width="22" height="22"/>
+                                                            <rect key="frame" x="277" y="11" width="23" height="23"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="CJN-UY-WLZ" secondAttribute="height" multiplier="35:35" id="tVj-5z-UEj"/>
                                                             </constraints>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dwg-64-TcH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="31"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="45"/>
                                                             <connections>
                                                                 <action selector="goComment:" destination="59w-ZL-w0Y" eventType="touchUpInside" id="7lY-4p-imt"/>
                                                             </connections>
@@ -789,25 +789,25 @@
                                                         <constraint firstItem="Dwg-64-TcH" firstAttribute="height" secondItem="GNu-M9-uMM" secondAttribute="height" id="36A-FN-OiV"/>
                                                         <constraint firstAttribute="trailing" secondItem="CJN-UY-WLZ" secondAttribute="trailing" id="3Gp-wa-0a6"/>
                                                         <constraint firstAttribute="bottom" secondItem="oJ8-WM-Gp5" secondAttribute="bottom" constant="10" id="7bM-yK-nfW"/>
+                                                        <constraint firstItem="CJN-UY-WLZ" firstAttribute="centerY" secondItem="GNu-M9-uMM" secondAttribute="centerY" id="Ihv-cr-3TE"/>
                                                         <constraint firstItem="Dwg-64-TcH" firstAttribute="centerX" secondItem="GNu-M9-uMM" secondAttribute="centerX" id="JBS-ie-Rlh"/>
                                                         <constraint firstItem="oJ8-WM-Gp5" firstAttribute="leading" secondItem="GNu-M9-uMM" secondAttribute="leading" constant="1" id="KXf-3x-Mtq"/>
                                                         <constraint firstItem="oJ8-WM-Gp5" firstAttribute="top" secondItem="GNu-M9-uMM" secondAttribute="top" id="MYF-ql-xNU"/>
-                                                        <constraint firstItem="AeO-Jb-Fx8" firstAttribute="top" secondItem="CJN-UY-WLZ" secondAttribute="bottom" constant="1" id="Mez-bT-IkQ"/>
+                                                        <constraint firstItem="AeO-Jb-Fx8" firstAttribute="top" secondItem="CJN-UY-WLZ" secondAttribute="bottom" constant="3" id="Mez-bT-IkQ"/>
                                                         <constraint firstItem="oJ8-WM-Gp5" firstAttribute="width" secondItem="GNu-M9-uMM" secondAttribute="width" id="RYZ-cP-qlh"/>
-                                                        <constraint firstAttribute="height" constant="31" id="STB-JD-o3c"/>
+                                                        <constraint firstAttribute="height" constant="45" id="STB-JD-o3c"/>
                                                         <constraint firstItem="Dwg-64-TcH" firstAttribute="centerY" secondItem="GNu-M9-uMM" secondAttribute="centerY" id="Xoc-sw-fCF"/>
                                                         <constraint firstItem="Dwg-64-TcH" firstAttribute="width" secondItem="GNu-M9-uMM" secondAttribute="width" id="YDD-F8-Nzi"/>
-                                                        <constraint firstItem="CJN-UY-WLZ" firstAttribute="top" secondItem="GNu-M9-uMM" secondAttribute="top" id="atJ-xi-yGF"/>
                                                         <constraint firstAttribute="bottom" secondItem="AeO-Jb-Fx8" secondAttribute="bottom" constant="7" id="gLO-8c-YKY"/>
                                                         <constraint firstItem="AeO-Jb-Fx8" firstAttribute="width" secondItem="GNu-M9-uMM" secondAttribute="width" id="tE5-EY-acc"/>
                                                         <constraint firstItem="AeO-Jb-Fx8" firstAttribute="centerX" secondItem="GNu-M9-uMM" secondAttribute="centerX" id="vYS-DC-JWw"/>
                                                     </constraints>
                                                 </view>
                                                 <view autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABw-sH-Ttp" userLabel="viewImage">
-                                                    <rect key="frame" x="8" y="8" width="359" height="160"/>
+                                                    <rect key="frame" x="8" y="8" width="359" height="157"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="East_BigWood1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="L83-QL-4rw">
-                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="160"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="157"/>
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -827,7 +827,7 @@
                                             <constraint firstItem="ABw-sH-Ttp" firstAttribute="centerX" secondItem="bah-H1-ldY" secondAttribute="centerX" id="bP5-OB-lUO"/>
                                             <constraint firstItem="ABw-sH-Ttp" firstAttribute="width" secondItem="bah-H1-ldY" secondAttribute="width" constant="-16" id="qk1-cw-Fnl"/>
                                             <constraint firstItem="GNu-M9-uMM" firstAttribute="centerX" secondItem="bah-H1-ldY" secondAttribute="centerX" id="u67-UZ-Doo"/>
-                                            <constraint firstItem="oJ8-WM-Gp5" firstAttribute="top" secondItem="ABw-sH-Ttp" secondAttribute="bottom" constant="16" id="zZx-xg-jOS"/>
+                                            <constraint firstItem="oJ8-WM-Gp5" firstAttribute="top" secondItem="ABw-sH-Ttp" secondAttribute="bottom" constant="5" id="zZx-xg-jOS"/>
                                         </constraints>
                                         <size key="customSize" width="375" height="215"/>
                                     </collectionViewCell>
@@ -2316,7 +2316,7 @@ This way it helps users to search for related items by simply using this app.</s
                                         <rect key="frame" x="0.0" y="70" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HV8-DF-gZt" id="Hi3-8C-LO7">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home.png" translatesAutoresizingMaskIntoConstraints="NO" id="nTz-jU-Krg">
@@ -2352,7 +2352,7 @@ This way it helps users to search for related items by simply using this app.</s
                                         <rect key="frame" x="0.0" y="150" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x7f-od-VdS" id="lLd-yd-pGb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile.png" translatesAutoresizingMaskIntoConstraints="NO" id="txt-RQ-jrs">
@@ -2388,7 +2388,7 @@ This way it helps users to search for related items by simply using this app.</s
                                         <rect key="frame" x="0.0" y="230" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t41-8f-DGm" id="xi4-xb-win">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logOut.png" translatesAutoresizingMaskIntoConstraints="NO" id="YjV-XV-u9H">
@@ -2421,7 +2421,7 @@ This way it helps users to search for related items by simply using this app.</s
                                         <rect key="frame" x="0.0" y="310" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gen-fl-3OY" id="9ma-9M-H3x">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aboutapp.png" translatesAutoresizingMaskIntoConstraints="NO" id="Itl-dV-OkI">
@@ -2537,7 +2537,7 @@ This way it helps users to search for related items by simply using this app.</s
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0hs-B9-yed">
-                                <rect key="frame" x="0.0" y="70" width="375" height="537"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="507"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kpn-Ca-eI7">
                                     <size key="itemSize" width="375" height="82"/>
@@ -2674,15 +2674,31 @@ This way it helps users to search for related items by simply using this app.</s
                                     <constraint firstItem="XUL-Zy-qL9" firstAttribute="width" secondItem="SJa-bF-W04" secondAttribute="width" id="vdd-m3-f2s"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZi-JL-TZT">
+                                <rect key="frame" x="0.0" y="70" width="375" height="30"/>
+                                <color key="backgroundColor" red="0.49803921569999998" green="0.49803921569999998" blue="0.49803921569999998" alpha="0.38647629309999998" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="VmG-AA-iXJ"/>
+                                </constraints>
+                                <state key="normal" title="Load More">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="loadMore:" destination="YAo-gt-fjh" eventType="touchUpInside" id="ktZ-R5-hZ7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="SJa-bF-W04" firstAttribute="top" secondItem="0hs-B9-yed" secondAttribute="bottom" id="3rJ-Ju-cvu"/>
                             <constraint firstItem="SJa-bF-W04" firstAttribute="width" secondItem="GPE-BM-4pk" secondAttribute="width" id="EsE-VC-yKP"/>
-                            <constraint firstItem="0hs-B9-yed" firstAttribute="top" secondItem="X4T-If-Byr" secondAttribute="bottom" id="Koj-2M-GEu"/>
                             <constraint firstItem="SJa-bF-W04" firstAttribute="centerX" secondItem="GPE-BM-4pk" secondAttribute="centerX" id="SWg-fV-Hp4"/>
+                            <constraint firstItem="nZi-JL-TZT" firstAttribute="centerX" secondItem="GPE-BM-4pk" secondAttribute="centerX" id="WON-bc-57d"/>
                             <constraint firstItem="0hs-B9-yed" firstAttribute="width" secondItem="GPE-BM-4pk" secondAttribute="width" id="WTO-cG-qMH"/>
+                            <constraint firstItem="nZi-JL-TZT" firstAttribute="top" secondItem="X4T-If-Byr" secondAttribute="bottom" id="Z7k-pU-l1w"/>
                             <constraint firstItem="X4T-If-Byr" firstAttribute="width" secondItem="GPE-BM-4pk" secondAttribute="width" id="Zq9-z2-QP5"/>
+                            <constraint firstItem="nZi-JL-TZT" firstAttribute="width" secondItem="GPE-BM-4pk" secondAttribute="width" id="bMf-cj-0cq"/>
+                            <constraint firstItem="0hs-B9-yed" firstAttribute="top" secondItem="nZi-JL-TZT" secondAttribute="bottom" id="ecn-q6-5SQ"/>
                             <constraint firstItem="ioL-fS-oRs" firstAttribute="top" secondItem="SJa-bF-W04" secondAttribute="bottom" id="lVQ-8h-ka0"/>
                             <constraint firstItem="X4T-If-Byr" firstAttribute="top" secondItem="vEx-ap-RcG" secondAttribute="bottom" id="oJl-B5-NZL"/>
                             <constraint firstItem="X4T-If-Byr" firstAttribute="centerX" secondItem="GPE-BM-4pk" secondAttribute="centerX" id="rav-5M-ioV"/>

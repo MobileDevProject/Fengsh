@@ -21,6 +21,8 @@
     AppDelegate *app;
     NSDictionary* dicComments;
     NSMutableArray *arrCommentsDic;
+    int startCount;
+    int endCount;
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *branchListTable;
 @property (retain, nonatomic)NSArray *BranchURLs;
@@ -202,44 +204,55 @@
 -(void)collectionView:(UICollectionView*)collectionView willDisplayCell:(nonnull UICollectionViewCell *)cell forItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
     if ([indexPath row]==((NSIndexPath*)[[collectionView indexPathsForVisibleItems] lastObject]).row) {
         
-        [self goToLastCell];
+        //[self goToLastCell];
         [self.view setUserInteractionEnabled:YES];
     }
 }
+- (IBAction)loadMore:(UIButton *)sender {
+    [self loadComments];
+}
 -(void)loadComments{
+    
     [self.view setUserInteractionEnabled:NO];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         arrCommentsDic = [[NSMutableArray alloc]init];
         //get all comments
         NSString* commentPath = [NSString stringWithFormat:@"%@_%@_%d", app.strBranchName,app.BranchDirection, app.SubBranchIndex];
         FIRDatabaseReference* ref = [[[[FIRDatabase database] reference] child:@"comments"]child:commentPath];
-        [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        FIRDatabaseQuery* refQuery = [[ref queryOrderedByChild:@"date"] queryLimitedToLast:endCount] ;
+        [refQuery observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             [self.view layoutIfNeeded];
             if (snapshot.exists) {
-                NSDictionary*dic = snapshot.value;
-                NSArray *keys;
+                    for (FIRDataSnapshot* dicData in snapshot.children) {
+                    [arrCommentsDic addObject:dicData.value];
+                }
                 
-                    keys = dic.allKeys;
-                    for (NSString *tempKey in keys) {
-                        [arrCommentsDic addObject:[dic objectForKey:tempKey]];
-                    }
-                
-                    NSSortDescriptor* descriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
-                    arrCommentsDic = [[NSMutableArray alloc]initWithArray:[arrCommentsDic sortedArrayUsingDescriptors:@[descriptor]]];
+                if (arrCommentsDic.count<endCount) {
+                    [self.view setUserInteractionEnabled:YES];
+                }
                 [self.branchListTable reloadData];
+            }else{
+                [self.view setUserInteractionEnabled:YES];
             }
             
         }];
     
 
     });
+    endCount = endCount * 2;
 }
+
+
+
+
 -(void)goToLastCell{
-    [self.view layoutIfNeeded];
-    NSInteger section = 0;
-    NSInteger item = arrCommentsDic.count - 1;
-    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:item inSection:section];
-    [self.branchListTable scrollToItemAtIndexPath:lastIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+    if (arrCommentsDic.count>0) {
+        [self.view layoutIfNeeded];
+        NSInteger section = 0;
+        NSInteger item = arrCommentsDic.count - 1;
+        NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:item inSection:section];
+        [self.branchListTable scrollToItemAtIndexPath:lastIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+    }
     
 }
 
@@ -250,13 +263,12 @@
     [self goToLastCell];
 }
 - (void)keyboardBeHidden:(NSNotification *)aNotification {
-    NSDictionary *info = aNotification.userInfo;
-    CGSize kbSize = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     self.bottomSpace.constant = 0;
     [self goToLastCell];
     
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    //cell height 60
     return CGSizeMake(collectionView.frame.size.width, 60);
 }
 
@@ -350,7 +362,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.textView.text= @"";
-
+    endCount = round(self.view.bounds.size.height/60) - 4;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

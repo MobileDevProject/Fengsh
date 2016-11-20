@@ -371,7 +371,34 @@
     //[self.btnNorthColor layer].anchorPoint = CGPointMake(50/2, 50/2);
     checkphoto = true;
 }
-
+//-(void)addNotificationIcon{
+//    UIImageView *iconImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
+//    [iconImage setImage:[UIImage imageNamed:@"iconImage.png"]];
+//    [self.btnNorthCareer addSubview:iconImage];
+//    [self.btnNorthColor addSubview:iconImage];
+//    [self.btnNorthWater addSubview:iconImage];
+//    [self.btnEastFamily addSubview:iconImage];
+//    [self.btnEastColor addSubview:iconImage];
+//    [self.btnEastBigWood addSubview:iconImage];
+//    [self.btnSouthColor addSubview:iconImage];
+//    [self.btnSouthFire addSubview:iconImage];
+//    [self.btnSouthRecognition addSubview:iconImage];
+//    [self.btnWestDependance addSubview:iconImage];
+//    [self.btnWestColor addSubview:iconImage];
+//    [self.btnWestSmallMetal addSubview:iconImage];
+//    [self.btnNorthEastSmallEarth addSubview:iconImage];
+//    [self.btnNorthEastBeige addSubview:iconImage];
+//    [self.btnNorthEastEducation addSubview:iconImage];
+//    [self.btnSouthEastWealth addSubview:iconImage];
+//    [self.btnSouthEastColor addSubview:iconImage];
+//    [self.btnSouthEastSmallWood addSubview:iconImage];
+//    [self.btnSouthWestMarriage addSubview:iconImage];
+//    [self.btnSouthWestColor addSubview:iconImage];
+//    [self.btnSouthWestBigEarth addSubview:iconImage];
+//    [self.btnNorthWestMentors addSubview:iconImage];
+//    [self.btnNorthWestColor addSubview:iconImage];
+//    [self.btnNorthWestBigMetal addSubview:iconImage];
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
