@@ -27,9 +27,10 @@
     CLLocationDirection currentDir;
     BOOL checkphoto;
     NSDictionary *directionButtons;
+    NSDictionary *directionAlertImages;
 
 }
-
+//direction buttons
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthCareer;
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthColor;
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthWater;
@@ -61,6 +62,41 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthWestMentors;
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthWestColor;
 @property (weak, nonatomic) IBOutlet UIButton *btnNorthWestBigMetal;
+
+
+//new comments alert images
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthCareer;
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthColor;
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthWater;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgEastFamily;
+@property (weak, nonatomic) IBOutlet UIImageView *imgEastColor;
+@property (weak, nonatomic) IBOutlet UIImageView *imgEastBigWood;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthColor;
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthFire;
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthRecognition;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgWestDependance;
+@property (weak, nonatomic) IBOutlet UIImageView *imgWestColor;
+@property (weak, nonatomic) IBOutlet UIImageView *imgWestSmallMetal;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthEastSmallEarth;
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthEastBeige;
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthEastEducation;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthEastWealth;
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthEastColor;
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthEastSmallWood;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthWestMarriage;
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthWestColor;
+@property (weak, nonatomic) IBOutlet UIImageView *imgSouthWestBigEarth;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthWestMentors;
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthWestColor;
+@property (weak, nonatomic) IBOutlet UIImageView *imgNorthWestBigMetal;
+
 
 @property (weak, nonatomic) IBOutlet UIView *MenuView;
 @property (weak, nonatomic) IBOutlet UIButton *btnPersonPhoto;
@@ -238,6 +274,7 @@
 //            
 //        }];
 
+    //photo circlization
     [self.view layoutIfNeeded];
     app = [UIApplication sharedApplication].delegate;
     self.imagePhoto.layer.cornerRadius = self.imagePhoto.frame.size.height/2;
@@ -370,35 +407,9 @@
     
     //[self.btnNorthColor layer].anchorPoint = CGPointMake(50/2, 50/2);
     checkphoto = true;
+
 }
-//-(void)addNotificationIcon{
-//    UIImageView *iconImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
-//    [iconImage setImage:[UIImage imageNamed:@"iconImage.png"]];
-//    [self.btnNorthCareer addSubview:iconImage];
-//    [self.btnNorthColor addSubview:iconImage];
-//    [self.btnNorthWater addSubview:iconImage];
-//    [self.btnEastFamily addSubview:iconImage];
-//    [self.btnEastColor addSubview:iconImage];
-//    [self.btnEastBigWood addSubview:iconImage];
-//    [self.btnSouthColor addSubview:iconImage];
-//    [self.btnSouthFire addSubview:iconImage];
-//    [self.btnSouthRecognition addSubview:iconImage];
-//    [self.btnWestDependance addSubview:iconImage];
-//    [self.btnWestColor addSubview:iconImage];
-//    [self.btnWestSmallMetal addSubview:iconImage];
-//    [self.btnNorthEastSmallEarth addSubview:iconImage];
-//    [self.btnNorthEastBeige addSubview:iconImage];
-//    [self.btnNorthEastEducation addSubview:iconImage];
-//    [self.btnSouthEastWealth addSubview:iconImage];
-//    [self.btnSouthEastColor addSubview:iconImage];
-//    [self.btnSouthEastSmallWood addSubview:iconImage];
-//    [self.btnSouthWestMarriage addSubview:iconImage];
-//    [self.btnSouthWestColor addSubview:iconImage];
-//    [self.btnSouthWestBigEarth addSubview:iconImage];
-//    [self.btnNorthWestMentors addSubview:iconImage];
-//    [self.btnNorthWestColor addSubview:iconImage];
-//    [self.btnNorthWestBigMetal addSubview:iconImage];
-//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -634,10 +645,25 @@
                            placeholderImage:[UIImage imageNamed:@"Splash.png"]];
         
     }
+    
+    //alert image init
+    //alert image registration
+    [self registerAllButtons];
+    
+    // alert image init hidden
+    for (UIImageView *image in directionAlertImages.allValues) {
+        [image setHidden:YES];
+        
+        
+    }
+    
     //it comes from image picker
     checkphoto = true;
     [self checkViewedTime];
-    [self registerAllButtons];
+    
+
+    
+    [geoPointCompass setDicRotationAlertViews:directionAlertImages];
 }
 
 -(void)checkViewedTime{
@@ -666,9 +692,12 @@
                             }
                             //if viewtime < updatedtime
                             if ([[dateFormatter dateFromString:viewedTime] compare:[dateFormatter dateFromString:updatedTime]] == NSOrderedAscending) {
-                                //[(UIButton*)[directionButtons objectForKey:key] setBackgroundImage:[UIImage imageNamed:@"pen.png"] forState:UIControlStateNormal];
+                                UIImageView *image = (UIImageView*)[directionAlertImages objectForKey:key];
+                                [image setHidden: NO];
                             }else{
-                                //[(UIButton*)[directionButtons objectForKey:key] setBackgroundImage:nil forState:UIControlStateNormal];
+                                UIImageView *image = (UIImageView*)[directionAlertImages objectForKey:key];
+                                [image setHidden: YES];
+                                
                             }
                             
                         }
@@ -711,6 +740,33 @@
                         self.btnNorthWestColor,app.directionNameArray[21],
                         self.btnNorthWestMentors,app.directionNameArray[22],
                         self.btnNorthWestBigMetal,app.directionNameArray[23],
+                        nil];
+    
+    directionAlertImages = [[NSDictionary alloc]initWithObjectsAndKeys:
+                        self.imgNorthWater,app.directionNameArray[0],
+                        self.imgNorthColor,app.directionNameArray[1],
+                        self.imgNorthCareer,app.directionNameArray[2],
+                        self.imgSouthFire,app.directionNameArray[3],
+                        self.imgSouthColor,app.directionNameArray[4],
+                        self.imgSouthRecognition,app.directionNameArray[5],
+                        self.imgEastColor,app.directionNameArray[6],
+                        self.imgEastFamily,app.directionNameArray[7],
+                        self.imgEastBigWood,app.directionNameArray[8],
+                        self.imgWestColor,app.directionNameArray[9],
+                        self.imgWestDependance,app.directionNameArray[10],
+                        self.imgWestSmallMetal,app.directionNameArray[11],
+                        self.imgNorthEastBeige,app.directionNameArray[12],
+                        self.imgNorthEastEducation,app.directionNameArray[13],
+                        self.imgNorthEastSmallEarth,app.directionNameArray[14],
+                        self.imgSouthEastColor,app.directionNameArray[15],
+                        self.imgSouthEastWealth,app.directionNameArray[16],
+                        self.imgSouthEastSmallWood,app.directionNameArray[17],
+                        self.imgSouthWestColor,app.directionNameArray[18],
+                        self.imgSouthWestBigEarth,app.directionNameArray[19],
+                        self.imgSouthWestMarriage,app.directionNameArray[20],
+                        self.imgNorthWestColor,app.directionNameArray[21],
+                        self.imgNorthWestMentors,app.directionNameArray[22],
+                        self.imgNorthWestBigMetal,app.directionNameArray[23],
                         nil];
 }
 @end

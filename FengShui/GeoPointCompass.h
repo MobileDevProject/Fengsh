@@ -14,6 +14,7 @@
 @property (nonatomic, retain) CLLocationManager* locationManager;
 
 @property (nonatomic, retain) UIView *rotateView;
+@property (nonatomic, retain) NSDictionary *dicRotationAlertViews;
 
 @property (nonatomic) CLLocationDegrees latitudeOfTargetedPoint;
 

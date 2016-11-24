@@ -189,8 +189,6 @@
 
 - (IBAction)SignInTwitter:(UIButton *)sender {
     
-
-    
     [self playSound:@"m3"];
     [self.view setUserInteractionEnabled:NO];
     [[Twitter sharedInstance] logInWithMethods:TWTRLoginMethodWebBased completion:^(TWTRSession * _Nullable session, NSError * _Nullable error) {
@@ -337,45 +335,45 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
 
 
 - (IBAction)SignInMail:(UIButton *)sender {
-    [self playSound:@"m3"];
-    NSString *strUserEmail = [[NSUserDefaults standardUserDefaults]
-                      stringForKey:@"preferenceEmail"];
-    NSString *strUserPass = [[NSUserDefaults standardUserDefaults]
-                      stringForKey:@"preferencePass"];
-    if (!([strUserEmail isEqualToString:@""] || [strUserPass isEqualToString:@"" ] || (strUserPass==nil || strUserEmail == nil))) {
-        [self.view setUserInteractionEnabled:NO];
-        [[FIRAuth auth] signInWithEmail:strUserEmail
-                               password:strUserPass
-                             completion:^(FIRUser *user, NSError *error) {
-                                 // [START_EXCLUDE]
-                                 if (error != nil) {
-                                     [self.view setUserInteractionEnabled:YES];
-                                     [self getUserDataAndGo];
-                                 }
-                                 else
-                                 {
-                                     UIAlertController * loginErrorAlert = [UIAlertController
-                                                                            alertControllerWithTitle:@"Login Failed"
-                                                                            message:error.localizedDescription
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
-                                     [self presentViewController:loginErrorAlert animated:YES completion:nil];
-                                     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                                         [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
-                                     }];
-                                     [loginErrorAlert addAction:ok];
-                                     
-                                     [self.view setUserInteractionEnabled:YES];
-                                 }
-                                 
-                                 
-                                 // [END_EXCLUDE]
-                             }];
-
-    }
-    else{
+//    [self playSound:@"m3"];
+//    NSString *strUserEmail = [[NSUserDefaults standardUserDefaults]
+//                      stringForKey:@"preferenceEmail"];
+//    NSString *strUserPass = [[NSUserDefaults standardUserDefaults]
+//                      stringForKey:@"preferencePass"];
+//    if (!([strUserEmail isEqualToString:@""] || [strUserPass isEqualToString:@"" ] || (strUserPass==nil || strUserEmail == nil))) {
+//        [self.view setUserInteractionEnabled:NO];
+//        [[FIRAuth auth] signInWithEmail:strUserEmail
+//                               password:strUserPass
+//                             completion:^(FIRUser *user, NSError *error) {
+//                                 // [START_EXCLUDE]
+//                                 if (error != nil) {
+//                                     [self.view setUserInteractionEnabled:YES];
+//                                     [self getUserDataAndGo];
+//                                 }
+//                                 else
+//                                 {
+//                                     UIAlertController * loginErrorAlert = [UIAlertController
+//                                                                            alertControllerWithTitle:@"Login Failed"
+//                                                                            message:error.localizedDescription
+//                                                                            preferredStyle:UIAlertControllerStyleAlert];
+//                                     [self presentViewController:loginErrorAlert animated:YES completion:nil];
+//                                     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+//                                         [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
+//                                     }];
+//                                     [loginErrorAlert addAction:ok];
+//                                     
+//                                     [self.view setUserInteractionEnabled:YES];
+//                                 }
+//                                 
+//                                 
+//                                 // [END_EXCLUDE]
+//                             }];
+//
+//    }
+//    else{
         SignInViewController *signInViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SignInViewController"];
         [self.navigationController pushViewController:signInViewController animated:YES];
-    }
+//    }
 }
 - (IBAction)SignUp:(UIButton *)sender {
     [self playSound:@"m3"];

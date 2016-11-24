@@ -61,7 +61,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     //test part
-    [self loadComments];
+    
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRecognized:)];
     [self.view addGestureRecognizer:panGesture];
 }
@@ -150,12 +150,12 @@
     NSDate *nowGMTDate = [dateFormatter dateFromString:timeStamp];
     NSDate *registeredDate = [dateFormatter dateFromString:registerDate];
     NSTimeInterval timeInterval = [nowGMTDate timeIntervalSinceDate:registeredDate];
-    int numberOfDays = round(timeInterval / 86400);
-    int numberOfHours = round(timeInterval / 3600);
-    int numberOfMinutes = round(timeInterval / 60);
-    int numberOfSeconds = round(timeInterval);
-    int numberOfMonths = round(timeInterval / (86400 * 30));
-    int numberOfYears = round(timeInterval / (86400 * 30 * 365));
+    int numberOfDays = timeInterval  / 86400;
+    int numberOfHours = timeInterval / 3600;
+    int numberOfMinutes = timeInterval / 60;
+    int numberOfSeconds = timeInterval;
+    int numberOfMonths = timeInterval / (86400 * 30);
+    int numberOfYears = timeInterval / (86400 * 30 * 365);
     if (numberOfYears>0) {
         agoTime = [NSString stringWithFormat:@"%dy", numberOfYears];
     }else if (numberOfMonths>0){
@@ -183,7 +183,10 @@
                 
     NSString *name = [snapshot.value objectForKey:@"name"];
                 NSURL *photoURL = [NSURL URLWithString:[snapshot.value  objectForKey:@"photourl"]];
-    NSDictionary *currentComment = [arrCommentsDic objectAtIndex:indexPath.row];
+                if (arrCommentsDic.count>0) {
+                    NSDictionary *currentComment = [arrCommentsDic objectAtIndex:indexPath.row];
+                }
+    
     NSString* comment = [currentComment objectForKey:@"contents"] ? [currentComment objectForKey:@"contents"] : @" ";
     app.commentDic = @{
                        @"name":name,
@@ -214,12 +217,13 @@
 -(void)loadComments{
     
     [self.view setUserInteractionEnabled:NO];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
         arrCommentsDic = [[NSMutableArray alloc]init];
         //get all comments
         NSString* commentPath = [NSString stringWithFormat:@"%@_%@_%d", app.strBranchName,app.BranchDirection, app.SubBranchIndex];
         FIRDatabaseReference* ref = [[[[FIRDatabase database] reference] child:@"comments"]child:commentPath];
         FIRDatabaseQuery* refQuery = [[ref queryOrderedByChild:@"date"] queryLimitedToLast:endCount] ;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [refQuery observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             [self.view layoutIfNeeded];
             if (snapshot.exists) {
@@ -362,7 +366,9 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.textView.text= @"";
-    endCount = round(self.view.bounds.size.height/60) - 4;
+    endCount = round(self.view.bounds.size.height/60) - 3
+    ;
+    [self loadComments];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

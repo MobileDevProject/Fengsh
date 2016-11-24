@@ -97,6 +97,9 @@ float angle;
 //        }];
         [UIView animateWithDuration:3.0f delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
             self.rotateView.transform = CGAffineTransformMakeRotation(DegreesToRadians(direction) + angle);
+            for (UIImageView *image in self.dicRotationAlertViews.allValues) {
+                image.transform = CGAffineTransformMakeRotation(-DegreesToRadians(direction) - angle);
+            }
         } completion:nil];
     }
 }
