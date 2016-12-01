@@ -501,7 +501,7 @@
                                                 <rect key="frame" x="-11" y="-159" width="375" height="667"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="comment9.png" translatesAutoresizingMaskIntoConstraints="NO" id="zYG-nC-yzt">
+                                            <imageView userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="comment9.png" translatesAutoresizingMaskIntoConstraints="NO" id="zYG-nC-yzt">
                                                 <rect key="frame" x="208" y="28" width="20" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
@@ -1397,19 +1397,6 @@
                                     <action selector="SignInMail:" destination="y08-9R-a7d" eventType="touchUpInside" id="lzu-jo-m6P"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tjg-Gg-ygJ">
-                                <rect key="frame" x="15" y="505" width="344" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="9yz-xO-0Gp"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GRAYSTROKE" family="GRAYSTROKE" pointSize="18"/>
-                                <state key="normal" title="SIGN IN WITH TWITTER" backgroundImage="sign_with_Twitter.png">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="SignInTwitter:" destination="y08-9R-a7d" eventType="touchUpInside" id="rtu-r8-ZMs"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f08-9f-Xub">
                                 <rect key="frame" x="105" y="607" width="254" height="40"/>
                                 <constraints>
@@ -1433,7 +1420,6 @@
                             <constraint firstItem="XEp-iy-bmW" firstAttribute="leading" secondItem="nfN-ay-GCK" secondAttribute="leading" id="6x7-1v-AQa"/>
                             <constraint firstItem="dwn-vu-jSX" firstAttribute="centerY" secondItem="VMB-Xw-Ryz" secondAttribute="centerY" id="8MJ-Hr-Je2"/>
                             <constraint firstItem="THA-MD-f8v" firstAttribute="centerX" secondItem="VMB-Xw-Ryz" secondAttribute="centerX" id="8la-YW-dce"/>
-                            <constraint firstItem="XEp-iy-bmW" firstAttribute="top" secondItem="Tjg-Gg-ygJ" secondAttribute="bottom" constant="8" id="8zY-OY-8k0"/>
                             <constraint firstItem="THA-MD-f8v" firstAttribute="width" secondItem="VMB-Xw-Ryz" secondAttribute="width" id="K6U-hf-H00"/>
                             <constraint firstItem="THA-MD-f8v" firstAttribute="centerY" secondItem="VMB-Xw-Ryz" secondAttribute="centerY" id="Mxa-Gq-E9v"/>
                             <constraint firstItem="f08-9f-Xub" firstAttribute="leading" secondItem="nfN-ay-GCK" secondAttribute="trailing" constant="20" id="TVx-TA-ueC"/>
@@ -1442,12 +1428,10 @@
                             <constraint firstItem="f08-9f-Xub" firstAttribute="leading" secondItem="VMB-Xw-Ryz" secondAttribute="leadingMargin" constant="89" id="gQP-RX-C3T"/>
                             <constraint firstItem="THA-MD-f8v" firstAttribute="height" secondItem="VMB-Xw-Ryz" secondAttribute="height" id="hPX-qD-MAJ"/>
                             <constraint firstItem="nfN-ay-GCK" firstAttribute="centerY" secondItem="f08-9f-Xub" secondAttribute="centerY" id="mld-rX-l3L"/>
-                            <constraint firstItem="Tjg-Gg-ygJ" firstAttribute="leading" secondItem="XEp-iy-bmW" secondAttribute="leading" id="nNW-vt-alu"/>
                             <constraint firstItem="dwn-vu-jSX" firstAttribute="height" secondItem="VMB-Xw-Ryz" secondAttribute="height" id="oap-C4-OFz"/>
                             <constraint firstItem="f08-9f-Xub" firstAttribute="trailing" secondItem="XEp-iy-bmW" secondAttribute="trailing" id="qPt-sZ-acV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="f08-9f-Xub" secondAttribute="trailing" id="rtR-qY-gee"/>
                             <constraint firstItem="vDC-e6-NrD" firstAttribute="top" secondItem="f08-9f-Xub" secondAttribute="bottom" constant="20" id="tdp-ee-OsN"/>
-                            <constraint firstItem="Tjg-Gg-ygJ" firstAttribute="trailing" secondItem="XEp-iy-bmW" secondAttribute="trailing" id="y27-TQ-QPN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="W2K-1S-7wa"/>
@@ -3037,7 +3021,6 @@ This way it helps users to search for related items by simply using this app.</s
         <image name="sign_In.png" width="171" height="74"/>
         <image name="sign_up.png" width="448" height="74"/>
         <image name="sign_with_Facebook.png" width="649" height="74"/>
-        <image name="sign_with_Twitter.png" width="649" height="74"/>
         <image name="totalMenu_Background.png" width="750" height="1334"/>
         <image name="totalMenu_Menu.png" width="750" height="750"/>
     </resources>

@@ -67,8 +67,7 @@
                         
                         NSDictionary *userData = @{@"name":name,
                                                    @"email":email,
-                                                   @"photourl":[metadata.downloadURL absoluteString],
-                                                   @"userid":userId,
+                                                   @"photourl":[metadata.downloadURL absoluteString],                                                   @"userid":userId,
                                                    @"numberofcomments":@"0"
                                                    };
                         [[[[[FIRDatabase database] reference] child:@"users"] child:[self currentUserUid]]setValue:userData];

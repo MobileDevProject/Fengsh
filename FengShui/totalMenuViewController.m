@@ -8,6 +8,7 @@
 @import Firebase;
 #import "Request.h"
 #import "AllDirectionBranchTableViewController.h"
+#import "CommentsViewController.h"
 #import "AppDelegate.h"
 #import "totalMenuViewController.h"
 #import "GeoPointCompass.h"
@@ -17,6 +18,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
+#import <FLAnimatedImage.h>
+#import <FLAnimatedImageView.h>
 
 @interface totalMenuViewController ()<CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
@@ -28,6 +31,7 @@
     BOOL checkphoto;
     NSDictionary *directionButtons;
     NSDictionary *directionAlertImages;
+    NSMutableDictionary *directionAlertButton;
 
 }
 //direction buttons
@@ -225,6 +229,7 @@
     [super viewDidLoad];
     
     geoPointCompass = [[GeoPointCompass alloc] init];
+    directionAlertButton = [[NSMutableDictionary alloc]init];
     // Add the image to be used as the compass on the GUI
     [geoPointCompass setRotateView:_MenuView];
     //permission to use camera
@@ -650,11 +655,33 @@
     //alert image registration
     [self registerAllButtons];
     
-    // alert image init hidden
+    // alert image init hiddenY
     for (UIImageView *image in directionAlertImages.allValues) {
+        image.alpha = 1;
         [image setHidden:YES];
+        [image setImage:[UIImage imageNamed:@"blink.png"]];
+//        [NSTimer scheduledTimerWithTimeInterval:17 target:self selector:@selector(hideSplashScreen) userInfo:nil repeats:YES];
+        //[self.view layoutIfNeeded];
+        //image.layer.cornerRadius = image.frame.size.height/2;
+        //image.clipsToBounds = YES;
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse animations:^{
+            image.alpha = 0;
+        } completion:nil  ];
+        if (directionAlertButton.count<24) {
+        UIButton *coverButton = [[UIButton alloc]initWithFrame:image.frame];
+        [coverButton setBounds:CGRectMake(coverButton.frame.origin.x - 10, coverButton.frame.origin.y - 10, coverButton.bounds.size.width+10, coverButton.bounds.size.height+10)];
+        [coverButton addTarget:self action:@selector(TapBlinkImage:) forControlEvents:UIControlEventTouchUpInside];
+        [self.MenuView addSubview:coverButton];
+        [coverButton setHidden: YES];
         
+            NSString *key = [directionAlertImages allKeysForObject:image].firstObject;
+            [directionAlertButton setValue:coverButton forKey:key];
+        }
         
+    }
+    for (NSString* akey in directionAlertButton.allKeys) {
+        UIButton * button = (UIButton*)[directionAlertButton objectForKey:akey];
+        [button setHidden: YES];
     }
     
     //it comes from image picker
@@ -673,7 +700,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (snapshot.exists) {
                     for (NSString* key in snapshot.value) {
-                        
                         if(![[NSUserDefaults standardUserDefaults] boolForKey:key]) {
                             //do initialization stuff here...
                             NSString *viewedTime = [[NSUserDefaults standardUserDefaults]
@@ -689,14 +715,33 @@
                                 viewedTime = [dateFormatter stringFromDate:[NSDate date]];
                                 [[NSUserDefaults standardUserDefaults] setObject:viewedTime forKey:key];
                                 [[NSUserDefaults standardUserDefaults] synchronize];
+                                
                             }
+                            
+                            //delete branch number from key (for example: SouthWest_Color_1 -> SouthWest_Color)
+                            NSInteger location1 = [key rangeOfString:@"_"].location;
+                            NSInteger location2 = [key rangeOfString:@"+"].location;
+                            NSString *directionS = [key substringToIndex:location1];
+                            int brunchNumer= [[key substringFromIndex:location2 + 1] intValue];
+                            NSString* BranchS = [key substringWithRange:NSMakeRange(location1+1, location2-location1-1)] ;
+                            NSString *filteredKey = [NSString stringWithFormat: @"%@_%@", directionS, BranchS];
+                            //[(UIButton*)[directionAlertButton objectForKey:filteredKey] setTag:brunchNumer];
                             //if viewtime < updatedtime
+                            if ([filteredKey isEqualToString:@"West_SmallMetal"]) {
+                                int d = 1;
+                            }
                             if ([[dateFormatter dateFromString:viewedTime] compare:[dateFormatter dateFromString:updatedTime]] == NSOrderedAscending) {
-                                UIImageView *image = (UIImageView*)[directionAlertImages objectForKey:key];
+                                
+                                
+                                UIImageView *image = (UIImageView*)[directionAlertImages objectForKey:filteredKey];
                                 [image setHidden: NO];
+                                UIButton *coverButton = (UIButton*)[directionAlertButton objectForKey:filteredKey];
+                                [coverButton setHidden: NO];
+                                [coverButton setTag:brunchNumer];
                             }else{
-                                UIImageView *image = (UIImageView*)[directionAlertImages objectForKey:key];
-                                [image setHidden: YES];
+                                //UIImageView *image = (UIImageView*)[directionAlertImages objectForKey:filteredKey];
+                                
+                                //[image setHidden: YES];
                                 
                             }
                             
@@ -711,7 +756,23 @@
 
 
 }
+-(void)TapBlinkImage:(UIButton*)sender{
+    NSString *key = [directionAlertButton allKeysForObject:sender].firstObject;
 
+    NSInteger location1 = [key rangeOfString:@"_"].location;
+    NSString *directionS = [key substringToIndex:location1];
+    NSString *brunchS = [key substringFromIndex:location1+1];
+    int brunchNumber = (int)sender.tag;
+    
+    [self playSound:@"m3"];
+    app.strBranchName = brunchS;
+    app.BranchDirection = directionS;
+    
+    int number  =  brunchNumber;
+    app.SubBranchIndex = number;
+    CommentsViewController *DirectionBranchTableScreen = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CommentsViewController"];
+    [self.navigationController pushViewController:DirectionBranchTableScreen animated:YES];
+}
 
 -(void)registerAllButtons{
     

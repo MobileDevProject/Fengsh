@@ -23,7 +23,6 @@
 @interface SplashAndHomeViewController ()<SWRevealViewControllerDelegate>
 {
     FBSDKLoginButton *loginButton;
-    TWTRLogInButton *logInTwitterButton;
     AppDelegate *app;
 }
 @property (weak, nonatomic) IBOutlet FLAnimatedImageView *splashImage;
@@ -68,21 +67,11 @@
         [self.splashImage setUserInteractionEnabled:YES];
         UITapGestureRecognizer *closeSplashGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSplash:)];
         [self.splashImage addGestureRecognizer:closeSplashGesture];
-        loginButton = [[FBSDKLoginButton alloc] init];
-        [loginButton setHidden:YES];
-        loginButton.delegate = self;
-        [self.view addSubview:loginButton];
-        loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
+
         
-        //signin with Twitter
-        logInTwitterButton.loginMethods = TWTRLoginMethodWebBased;
-        [logInTwitterButton setHidden:YES];
-        [self.view addSubview:logInTwitterButton];
-        //
-        //    // TODO: Change where the log in button is positioned in your view
-        //    logInButton.center = self.view.center;
-        //    [self.view addSubview:logInButton];
+        
     }
+
 }
 -(void)getUserDataAndGo{
     FIRUser *user = [FIRAuth auth].currentUser;
@@ -186,44 +175,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-- (IBAction)SignInTwitter:(UIButton *)sender {
-    
-    [self playSound:@"m3"];
-    [self.view setUserInteractionEnabled:NO];
-    [[Twitter sharedInstance] logInWithMethods:TWTRLoginMethodWebBased completion:^(TWTRSession * _Nullable session, NSError * _Nullable error) {
-        if (session) {
-
-
-                if (error==nil) {
-                    NSLog(@"logged in user with id %@", session.userName);
-                    //add MBprogressBar
-                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-                        // Do something...
-                        FIRAuthCredential *credential = [FIRTwitterAuthProvider credentialWithToken:session.authToken secret:session.authTokenSecret ];
-                        [[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser * user, NSError * error) {
-                            //after progress
-                            dispatch_async(dispatch_get_main_queue(), ^{///////
-                                [MBProgressHUD hideHUDForView:self.view animated:YES];/////
-                                [self.view setUserInteractionEnabled:YES];
-                                [self getUserDataAndGo];                            });
-                            //after progress
-                    }];
-                    });//Add MBProgressBar (dispatch)
-                    }
-//
-//            
-            }else{
-
-
-                
-                [self.view setUserInteractionEnabled:YES];
-            }
-    }];
-
-}
-
 
 
 

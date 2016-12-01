@@ -135,6 +135,7 @@
     [self playSound:@"backButton"];
 }
 - (IBAction)goSignUp:(id)sender {
+    
     [self playSound:@"m3"];
     [self.view endEditing:YES];
     NSString *strUserEmail = _txtEmail.text;
@@ -221,17 +222,86 @@
          //register user
              dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                  // Do something...
-             [Request registerUser:_txtUserName.text email:_txtEmail.text image:self.imgPersonPhoto.image];
-             //go sign in
-                 //after progress
-                 dispatch_async(dispatch_get_main_queue(), ^{///////
-             [self presentViewController:loginErrorAlert animated:YES completion:nil];
-             UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                 [self.navigationController popViewControllerAnimated:YES];
              
-            }];
-             [loginErrorAlert addAction:ok];
+                 
+                 FIRUser *user = [FIRAuth auth].currentUser;
+                 FIRUserProfileChangeRequest *changeRequest = [user profileChangeRequest];
+                 NSString *userId = user.uid;
+                 FIRStorage *storage = [FIRStorage storage];
+                 FIRStorageReference *storageRef = [storage reference];
+                 AppDelegate *app = [UIApplication sharedApplication].delegate;
+                 dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                     FIRStorageReference *photoImagesRef = [storageRef child:[NSString stringWithFormat:@"users photo/%@/photo.jpg", [Request currentUserUid]] ];
+                     NSData *imageData = UIImagePNGRepresentation(self.imgPersonPhoto.image);
+                     //register email
+                     
+                     //    [[FIRAuth auth] sendPasswordResetWithEmail:email
+                     //                                    completion:^(NSError *_Nullable error) {
+                     //                                        if (error) {
+                     //                                            // An error happened.
+                     //                                        } else {
+                     //                                            // Password reset email sent.
+                     //                                        }
+                     //                                    }];
+                     
+                     //image compress until size < 1 MB
+                     int count = 0;
+                     while ([imageData length] > 1000000) {
+                         imageData = UIImageJPEGRepresentation(self.imgPersonPhoto.image, powf(0.9, count));
+                         count++;
+                         NSLog(@"just shrunk it once.");
+                     }
+                     
+                     // Upload the file to the path "images/userID.PNG"f
+                     
+                     [photoImagesRef putData:imageData metadata:nil completion:^(FIRStorageMetadata *metadata, NSError *error) {
+                         if (error != nil) {
+                             // Uh-oh, an error occurred!
+                         } else {
+                             // Metadata contains file metadata such as size, content-type, and download URL.
+                             changeRequest.displayName = strUserEmail;
+                             changeRequest.photoURL = metadata.downloadURL;
+                             [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     if (error) {
+                                         // An error happened.
+                                         NSLog(@"%@", error.description);
+                                     } else {
+                                         // Profile updated.
+                                         
+                                         NSDictionary *userData = @{@"name":_txtUserName.text,
+                                                                    @"email":strUserEmail,
+                                                                    @"photourl":[metadata.downloadURL absoluteString],                                                   @"userid":userId,
+                                                                    @"numberofcomments":@"0"
+                                                                    };
+                                         [[[[[FIRDatabase database] reference] child:@"users"] child:userId]setValue:userData];
+                                         //after progress
+                                         dispatch_async(dispatch_get_main_queue(), ^{///////
+                                             [self presentViewController:loginErrorAlert animated:YES completion:nil];
+                                             UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                                                 [self.navigationController popViewControllerAnimated:YES];
+                                                 
+                                             }];
+                                             [loginErrorAlert addAction:ok];
+                                         });
+                                         
+                                     }
+                                     
+                                 });
+                             }];
+                             
+                         }
+                     }];
+                     
                  });
+
+                 
+                 
+                 
+                 
+                 
+             //go sign in
+                 
              });
 
          
@@ -243,7 +313,7 @@
      ];
                     });//Add MBProgressBar (dispatch)
         }
-                       
+     
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

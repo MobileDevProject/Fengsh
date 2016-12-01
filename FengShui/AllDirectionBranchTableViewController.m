@@ -155,7 +155,7 @@
     NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
     [dateFormatter setTimeZone:gmt];
     NSString *timeStamp = [dateFormatter stringFromDate:[NSDate date]];
-    NSString* userdefaultkey = [NSString stringWithFormat:@"%@_%@", app.BranchDirection, app.strBranchName];
+    NSString* userdefaultkey = [NSString stringWithFormat:@"%@_%@+%d", app.BranchDirection, app.strBranchName, app.SubBranchIndex];
     [[NSUserDefaults standardUserDefaults] setObject:timeStamp forKey:userdefaultkey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

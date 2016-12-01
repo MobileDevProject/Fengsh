@@ -212,6 +212,7 @@
     }
 }
 - (IBAction)loadMore:(UIButton *)sender {
+    [_textView resignFirstResponder];
     [self loadComments];
 }
 -(void)loadComments{
@@ -250,6 +251,7 @@
 
 
 -(void)goToLastCell{
+    
     if (arrCommentsDic.count>0) {
         [self.view layoutIfNeeded];
         NSInteger section = 0;
@@ -358,7 +360,7 @@
             
             self.textView.text= @"";
             //set update time
-            [Request updateTime:[NSString stringWithFormat:@"%@_%@",app.BranchDirection, app.strBranchName] updatedTime:timeStamp];
+            [Request updateTime:[NSString stringWithFormat:@"%@_%@+%d",app.BranchDirection, app.strBranchName, app.SubBranchIndex] updatedTime:timeStamp];
         });
     }];
     });
@@ -366,13 +368,22 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.textView.text= @"";
-    endCount = round(self.view.bounds.size.height/60) - 3
-    ;
+    endCount = round(self.view.bounds.size.height/60) - 3;
     [self loadComments];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [self.textView resignFirstResponder];
+    // get current date
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    [dateFormatter setTimeZone:gmt];
+    NSString *timeStamp = [dateFormatter stringFromDate:[NSDate date]];
+    NSString* userdefaultkey = [NSString stringWithFormat:@"%@_%@+%d", app.BranchDirection, app.strBranchName, app.SubBranchIndex];
+    [[NSUserDefaults standardUserDefaults] setObject:timeStamp forKey:userdefaultkey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 @end
