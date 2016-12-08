@@ -5,7 +5,7 @@
 //  Created by Theodor Swedenborg on 20/08/16.
 //  Copyright © 2016 Theodor Swedenborg. All rights reserved.
 //
-#import "SignUpViewController.h"
+#import "SplashAndHomeViewController.h"
 #import "SWRevealViewController.h"
 #import "SignInViewController.h"
 #import <AVFoundation/AVFoundation.h>
@@ -134,6 +134,8 @@
                                          [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"preferenceEmail"];
                                          [[NSUserDefaults standardUserDefaults] setObject:userPass forKey:@"preferencePass"];
                                          [[NSUserDefaults standardUserDefaults] synchronize];
+                                         //SplashAndHomeViewController *signUpViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SignUpViewController"];
+                                         //[self.navigationController pushViewController:signUpViewController animated:YES];
                                          [self getUserDataAndGo];
                                      }
                                      });

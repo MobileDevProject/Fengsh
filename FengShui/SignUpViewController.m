@@ -13,6 +13,9 @@
 #import "Request.h"
 #import "MBProgressHUD.h"
 @interface SignUpViewController ()<UITextFieldDelegate>
+{
+    AppDelegate *app;
+}
 @property (weak, nonatomic) IBOutlet UITextField *txtUserName;
 @property (weak, nonatomic) IBOutlet UITextField *txtEmail;
 @property (weak, nonatomic) IBOutlet UITextField *txtPassword;
@@ -190,7 +193,7 @@
      {
          //after progress
          dispatch_async(dispatch_get_main_queue(), ^{///////
-             [MBProgressHUD hideHUDForView:self.view animated:YES];/////
+             /////
              
          if (error != nil) {
              UIAlertController * loginErrorAlert = [UIAlertController
@@ -203,6 +206,7 @@
              }];
              [loginErrorAlert addAction:ok];
              [self.view setUserInteractionEnabled:YES];
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
          }
          else{
              //[[NSUserDefaults standardUserDefaults] setObject:strUserEmail forKey:@"preferenceUserName"];
@@ -229,7 +233,7 @@
                  NSString *userId = user.uid;
                  FIRStorage *storage = [FIRStorage storage];
                  FIRStorageReference *storageRef = [storage reference];
-                 AppDelegate *app = [UIApplication sharedApplication].delegate;
+                 app = [UIApplication sharedApplication].delegate;
                  dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                      FIRStorageReference *photoImagesRef = [storageRef child:[NSString stringWithFormat:@"users photo/%@/photo.jpg", [Request currentUserUid]] ];
                      NSData *imageData = UIImagePNGRepresentation(self.imgPersonPhoto.image);
@@ -257,6 +261,8 @@
                      [photoImagesRef putData:imageData metadata:nil completion:^(FIRStorageMetadata *metadata, NSError *error) {
                          if (error != nil) {
                              // Uh-oh, an error occurred!
+                             [self.view setUserInteractionEnabled:YES];
+                             [MBProgressHUD hideHUDForView:self.view animated:YES];
                          } else {
                              // Metadata contains file metadata such as size, content-type, and download URL.
                              changeRequest.displayName = strUserEmail;
@@ -279,8 +285,10 @@
                                          dispatch_async(dispatch_get_main_queue(), ^{///////
                                              [self presentViewController:loginErrorAlert animated:YES completion:nil];
                                              UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                                                 [self.navigationController popViewControllerAnimated:YES];
-                                                 
+                                                 //[self.navigationController popViewControllerAnimated:YES];
+                                                 [self getUserDataAndGo];
+                                                 [self.view setUserInteractionEnabled:YES];
+                                                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                                              }];
                                              [loginErrorAlert addAction:ok];
                                          });
@@ -306,7 +314,7 @@
 
          
          }
-         [self.view setUserInteractionEnabled:YES];
+         
          });
          //after progress
      }
@@ -314,6 +322,82 @@
                     });//Add MBProgressBar (dispatch)
         }
      
+}
+-(void)getUserDataAndGo{
+    FIRUser *user = [FIRAuth auth].currentUser;
+    if (user !=nil) {
+        
+        [self.view setUserInteractionEnabled:NO];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        //get manager data
+        app.user.userId = [NSString stringWithFormat:@"%@", user.uid];
+        NSString *userID = user.uid;
+        FIRDatabaseReference *userInfo = [[[Request dataref] child:@"users"]child: userID];
+        //FIRDatabaseReference *ref = [Request dataref];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            [userInfo observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                if (snapshot.exists) {
+                    app.user = [[UserInfo alloc]init];
+                    NSDictionary *dic = snapshot.value;
+                    app.user.name = [dic objectForKey:@"name"];
+                    app.user.userId = userID;
+                    app.user.email = [dic objectForKey:@"email"];
+                    app.user.photoURL = [NSURL URLWithString:[dic objectForKey:@"photourl"]];
+                    app.user.numberOfComments = [dic objectForKey:@"numberofcomments"];
+                    //NSDictionary*userDic = [[NSDictionary alloc]initWithObjectsAndKeys:@"name",name,@"email", email, @"photourl",photoURL, @"numberofcomments", numberOfComments,@"userid", userId, nil];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        //go maim workspace
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [self.view setUserInteractionEnabled:YES];
+                        // go to main view
+                        SWRevealViewController *swRevealViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+                        [self presentViewController:swRevealViewController animated:YES completion:nil];
+                        
+                    });
+                    
+                }else{
+                    [self.view setUserInteractionEnabled:YES];
+                    
+                    UIAlertController * loginErrorAlert = [UIAlertController
+                                                           alertControllerWithTitle:@"Cannot find your info"
+                                                           message:@"cannot access your info. please try again."
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+                    [self presentViewController:loginErrorAlert animated:YES completion:nil];
+                    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+                        [self.view setUserInteractionEnabled:YES];
+                        [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
+                    }];
+                    [loginErrorAlert addAction:ok];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [self.view setUserInteractionEnabled:YES];
+                }
+            }];
+        });
+        
+    }else{
+        NSError *error;
+        //if you have a wong credencial info(currentuser) the signout would go out from it.
+        [[FIRAuth auth] signOut:&error];
+        
+        [self.view setUserInteractionEnabled:YES];
+        
+        UIAlertController * loginErrorAlert = [UIAlertController
+                                               alertControllerWithTitle:@"Cannot find your info"
+                                               message:@"cannot access your info. please try again."
+                                               preferredStyle:UIAlertControllerStyleAlert];
+        [self presentViewController:loginErrorAlert animated:YES completion:nil];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self.view setUserInteractionEnabled:YES];
+            [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [loginErrorAlert addAction:ok];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.view setUserInteractionEnabled:YES];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

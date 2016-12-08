@@ -40,6 +40,7 @@
     //subsub web index
     _SubBranchWebIndex = 0;
     _splashOn = YES;
+    self.logOutOn = NO;
     //    NSString *userName = @"";
 //    NSString *userPass = @"";
 //    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"preferenceName"];

@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic) int NumberOfPhotos;
 @property (nonatomic) BOOL splashOn;
+@property (nonatomic) BOOL logOutOn;
 @property (nonatomic, retain)FIRUser* currentUser;
 @property (nonatomic, retain)UserInfo* user;
 

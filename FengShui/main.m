@@ -6,7 +6,7 @@
 //  Copyright © 2016 Theodor Swedenborg. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>Hi
+#import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
 int main(int argc, char * argv[]) {

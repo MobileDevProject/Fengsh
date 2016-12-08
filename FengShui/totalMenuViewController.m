@@ -696,7 +696,7 @@
 -(void)checkViewedTime{
     FIRDatabaseReference *updatedTimeRef = [[Request dataref] child:@"updatedTime"];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [updatedTimeRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        [updatedTimeRef observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (snapshot.exists) {
                     for (NSString* key in snapshot.value) {

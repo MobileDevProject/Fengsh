@@ -107,7 +107,7 @@
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             dispatch_async(dispatch_get_main_queue(), ^{
-
+                
     //user photo
     UIImageView *userPhoto = (UIImageView*)[cell viewWithTag:101];
     //user name
@@ -345,7 +345,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
         [NSString stringWithFormat:@"%d", [app.user.numberOfComments intValue] + 1];
         FIRDatabaseReference *userNumberOfComments = [[[[FIRDatabase database] reference] child:@"users"]child:app.user.userId];
-            [userNumberOfComments updateChildValues:@{@"numberofcomments":[NSString stringWithFormat:@"%d", ([app.user.numberOfComments intValue] + 1)]}];
+            int d = [app.user.numberOfComments intValue] + 1;
+            [userNumberOfComments updateChildValues:@{@"numberofcomments":[NSString stringWithFormat:@"%d",d]}];
         [arrCommentsDic addObject:commentDict];
         [self.branchListTable reloadData];
             

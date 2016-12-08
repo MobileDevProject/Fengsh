@@ -7,6 +7,7 @@
 //
 @import Firebase;
 @import FirebaseAuth;
+#import "AppDelegate.h"
 #import "SWRevealViewController.h"
 #import "SideMenuViewController.h"
 #import "SignInViewController.h"
@@ -75,15 +76,12 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         NSError *error;
         [[FIRAuth auth] signOut:&error];
+        AppDelegate *app = [UIApplication sharedApplication].delegate;
+        app.logOutOn = YES;
+        //app.splashOn = NO;
         [[[FBSDKLoginManager alloc] init] logOut];
-        
-        TWTRSessionStore *store = [[Twitter sharedInstance] sessionStore];
-        NSString *userID = store.session.userID;
-        
-        [store logOutUserID:userID];
-        
         NSLog(@"error: %@", error.localizedDescription);
-        UINavigationController *homeViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"HomeViewController"];
+        UINavigationController *homeViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SignInViewController"];
         [self presentViewController:homeViewController animated:YES completion:nil];
         
     }

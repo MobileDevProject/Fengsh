@@ -1,10 +1,3 @@
-//
-//  SplashAndHomeViewController.m
-//  FengShui
-//
-//  Created by Theodor Swedenborg on 19/08/16.
-//  Copyright © 2016 Theodor Swedenborg. All rights reserved.
-//
 @import Firebase;
 #import "AppDelegate.h"
 #import <Firebase.h>
@@ -67,11 +60,11 @@
         [self.splashImage setUserInteractionEnabled:YES];
         UITapGestureRecognizer *closeSplashGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSplash:)];
         [self.splashImage addGestureRecognizer:closeSplashGesture];
-
+        
         
         
     }
-
+    
 }
 -(void)getUserDataAndGo{
     FIRUser *user = [FIRAuth auth].currentUser;
@@ -185,65 +178,167 @@
         [self.view setUserInteractionEnabled:YES];
         [self getUserDataAndGo];
     }else{
-    FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-    [loginManager logInWithReadPermissions:@[@"email"]
-                        fromViewController:self
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                       
-                                       if (!result.isCancelled) {
-                                           //add MBprogressBar
-                                           [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                                           dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-                                               // Do something...
-                                               
-                                               //[self.view setUserInteractionEnabled:NO];
-                                               FIRAuthCredential *credential = [FIRFacebookAuthProvider credentialWithAccessToken:[FBSDKAccessToken currentAccessToken].tokenString];
-                                               [[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser * user, NSError * error) {
-                                                   
-                                                   dispatch_async(dispatch_get_global_queue(0,0), ^{
-                                                       NSData * data = [[NSData alloc] initWithContentsOfURL: user.photoURL];
-                                                       if ( data == nil )
-                                                           return;
-                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                           
-                                                           [Request registerUser:user.displayName email:user.email image:[UIImage imageWithData: data]];
-                                                       
-                                                   
-                                                   
-                                                   //after progress
-                                                       dispatch_async(dispatch_get_main_queue(), ^{///////
-                                                           [MBProgressHUD hideHUDForView:self.view animated:YES];/////
-                                                           
-                                                           
-                                                           if (error==nil) {
-                                                               [self.view setUserInteractionEnabled:YES];
-                                                               [self getUserDataAndGo];
-                                                           }else{
-                                                               UIAlertController * loginErrorAlert = [UIAlertController
-                                                                                              alertControllerWithTitle:@"Login Failed"
-                                                                                              message:error.localizedDescription
-                                                                                              preferredStyle:UIAlertControllerStyleAlert];
-                                                               [self presentViewController:loginErrorAlert animated:YES completion:nil];
-                                                               UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                                                                   [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
-                                                               }];
-                                                               [loginErrorAlert addAction:ok];
-                                                               [self.view setUserInteractionEnabled:YES];
-                                                           }
-                                                       });
-                                                    //after progress
-                                                       });
-                                                       
-                                                   });
-                                                   }];
-                                           });//Add MBProgressBar (dispatch)
-                                       }//result is cancelled.
+        FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+        [loginManager logInWithReadPermissions:@[@"email"]
+                            fromViewController:self
+                                       handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                            
-                                   }];//Login progress
+                                           if (!result.isCancelled) {
+                                               //add MBprogressBar
+                                               [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                                               dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                                                   // Do something...
+                                                   
+                                                   //[self.view setUserInteractionEnabled:NO];
+                                                   FIRAuthCredential *credential = [FIRFacebookAuthProvider credentialWithAccessToken:[FBSDKAccessToken currentAccessToken].tokenString];
+                                                   [[FIRAuth auth] signInWithCredential:credential completion:^(FIRUser * user, NSError * error) {
+                                                       
+                                                       dispatch_async(dispatch_get_global_queue(0,0), ^{
+                                                           NSData * data = [[NSData alloc] initWithContentsOfURL: user.photoURL];
+                                                           if ( data == nil )
+                                                               return;
+                                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                                               
+                                                               [Request registerUser:user.displayName email:user.email image:[UIImage imageWithData: data]];
+                                                               
+                                                               
+                                                               
+                                                               //after progress
+                                                               dispatch_async(dispatch_get_main_queue(), ^{///////
+                                                                   [MBProgressHUD hideHUDForView:self.view animated:YES];/////
+                                                                   
+                                                                   
+                                                                   if (error==nil) {
+                                                                       
+                                                                       
+                                                                       //////////////////////////////////////////
+                                                                       
+                                                                       
+                                                                       
+                                                                       
+//                                                                       FIRUser *user = [FIRAuth auth].currentUser;
+//                                                                       FIRUserProfileChangeRequest *changeRequest = [user profileChangeRequest];
+//                                                                       NSString *userId = user.uid;
+//                                                                       FIRStorage *storage = [FIRStorage storage];
+//                                                                       FIRStorageReference *storageRef = [storage reference];
+//                                                                       //AppDelegate *app = [UIApplication sharedApplication].delegate;
+//                                                                       dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+//                                                                           FIRStorageReference *photoImagesRef = [storageRef child:[NSString stringWithFormat:@"users photo/%@/photo.jpg", [Request currentUserUid]] ];
+//                                                                           NSData *imageData = UIImagePNGRepresentation([UIImage imageWithData: data]);
+//                                                                           //register email
+//                                                                           
+//                                                                           //    [[FIRAuth auth] sendPasswordResetWithEmail:email
+//                                                                           //                                    completion:^(NSError *_Nullable error) {
+//                                                                           //                                        if (error) {
+//                                                                           //                                            // An error happened.
+//                                                                           //                                        } else {
+//                                                                           //                                            // Password reset email sent.
+//                                                                           //                                        }
+//                                                                           //                                    }];
+//                                                                           
+//                                                                           //image compress until size < 1 MB
+//                                                                           int count = 0;
+//                                                                           while ([imageData length] > 1000000) {
+//                                                                               imageData = UIImageJPEGRepresentation([UIImage imageWithData: data], powf(0.9, count));
+//                                                                               count++;
+//                                                                               NSLog(@"just shrunk it once.");
+//                                                                           }
+//                                                                           
+//                                                                           // Upload the file to the path "images/userID.PNG"f
+//                                                                           
+//                                                                           [photoImagesRef putData:imageData metadata:nil completion:^(FIRStorageMetadata *metadata, NSError *error) {
+//                                                                               if (error != nil) {
+//                                                                                   // Uh-oh, an error occurred!
+//                                                                               } else {
+//                                                                                   // Metadata contains file metadata such as size, content-type, and download URL.
+//                                                                                   changeRequest.displayName = user.displayName;
+//                                                                                   changeRequest.photoURL = metadata.downloadURL;
+//                                                                                   [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
+//                                                                                       dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                                           if (error) {
+//                                                                                               // An error happened.
+//                                                                                               NSLog(@"%@", error.description);
+//                                                                                           } else {
+//                                                                                               // Profile updated.
+//                                                                                               
+//                                                                                               NSDictionary *userData = @{@"name":user.displayName,
+//                                                                                                                          @"email":user.email,
+//                                                                                                                          @"photourl":[metadata.downloadURL absoluteString],                                                   @"userid":userId,
+//                                                                                                                          @"numberofcomments":@"0"
+//                                                                                                                          };
+//                                                                                               [[[[[FIRDatabase database] reference] child:@"users"] child:userId]setValue:userData withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
+//                                                                                                   [self.view setUserInteractionEnabled:YES];
+//                                                                                                   [self getUserDataAndGo];
+//                                                                                               }];
+//                                                                                                
+//                                                                                                }
+//                                                                                                
+//                                                                                                });
+//                                                                                                }];
+//                                                                                               
+//                                                                                           }
+//                                                                                       }];
+//                                                                                                      
+//                                                                                    });
+//                                                                                
+//                                                                       
+//                                                                       
+//                                                                       
+//                                                                       
+//                                                                       
+//                                                                       
+//                                                                       
+//                                                                       
+//                                                                       
+//                                                                       
+                                                                       
+                                                                       ////////////////////////////////////////
+                                                                       ///[Request registerUser:user.displayName email:user.email image:[UIImage imageWithData: data]];
+                                                                       
+                                                                       
+                                                                       {
+                                                                       app.user = [[UserInfo alloc]init];
+                                                                       app.user.name = user.displayName;
+                                                                       app.user.userId = user.uid;
+                                                                       app.user.email = user.email;
+                                                                       app.user.photoURL = user.photoURL;
+                                                                       app.user.numberOfComments = @"0";
+                                                                           [self getUserDataAndGo];
+                                                                           //go maim workspace
+                                                                           [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                                           [self.view setUserInteractionEnabled:YES];
+                                                                           // go to main view
+                                                                           SWRevealViewController *swRevealViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+                                                                           [self presentViewController:swRevealViewController animated:YES completion:nil];
+                                                                       }
+                                                                       
+                                                                       
+                                                                   }else{
+                                                                       UIAlertController * loginErrorAlert = [UIAlertController
+                                                                                                              alertControllerWithTitle:@"Login Failed"
+                                                                                                              message:error.localizedDescription
+                                                                                                              preferredStyle:UIAlertControllerStyleAlert];
+                                                                       [self presentViewController:loginErrorAlert animated:YES completion:nil];
+                                                                       UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                                                                           [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
+                                                                       }];
+                                                                       [loginErrorAlert addAction:ok];
+                                                                       [self.view setUserInteractionEnabled:YES];
+                                                                   }
+                                                               });
+                                                               //after progress
+                                                           });
+                                                           
+                                                       });
+                                                   }];
+                                               });//Add MBProgressBar (dispatch)
+                                           }//result is cancelled.
+                                           
+                                       }];//Login progress
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self.view setUserInteractionEnabled:YES];
     }
-
+    
 }
 
 
@@ -275,7 +370,7 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
                 [loginErrorAlert addAction:ok];
                 [self.view setUserInteractionEnabled:YES];
             }
-
+            
         }
         
     }
@@ -286,45 +381,45 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
 
 
 - (IBAction)SignInMail:(UIButton *)sender {
-//    [self playSound:@"m3"];
-//    NSString *strUserEmail = [[NSUserDefaults standardUserDefaults]
-//                      stringForKey:@"preferenceEmail"];
-//    NSString *strUserPass = [[NSUserDefaults standardUserDefaults]
-//                      stringForKey:@"preferencePass"];
-//    if (!([strUserEmail isEqualToString:@""] || [strUserPass isEqualToString:@"" ] || (strUserPass==nil || strUserEmail == nil))) {
-//        [self.view setUserInteractionEnabled:NO];
-//        [[FIRAuth auth] signInWithEmail:strUserEmail
-//                               password:strUserPass
-//                             completion:^(FIRUser *user, NSError *error) {
-//                                 // [START_EXCLUDE]
-//                                 if (error != nil) {
-//                                     [self.view setUserInteractionEnabled:YES];
-//                                     [self getUserDataAndGo];
-//                                 }
-//                                 else
-//                                 {
-//                                     UIAlertController * loginErrorAlert = [UIAlertController
-//                                                                            alertControllerWithTitle:@"Login Failed"
-//                                                                            message:error.localizedDescription
-//                                                                            preferredStyle:UIAlertControllerStyleAlert];
-//                                     [self presentViewController:loginErrorAlert animated:YES completion:nil];
-//                                     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-//                                         [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
-//                                     }];
-//                                     [loginErrorAlert addAction:ok];
-//                                     
-//                                     [self.view setUserInteractionEnabled:YES];
-//                                 }
-//                                 
-//                                 
-//                                 // [END_EXCLUDE]
-//                             }];
-//
-//    }
-//    else{
-        SignInViewController *signInViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SignInViewController"];
-        [self.navigationController pushViewController:signInViewController animated:YES];
-//    }
+    //    [self playSound:@"m3"];
+    //    NSString *strUserEmail = [[NSUserDefaults standardUserDefaults]
+    //                      stringForKey:@"preferenceEmail"];
+    //    NSString *strUserPass = [[NSUserDefaults standardUserDefaults]
+    //                      stringForKey:@"preferencePass"];
+    //    if (!([strUserEmail isEqualToString:@""] || [strUserPass isEqualToString:@"" ] || (strUserPass==nil || strUserEmail == nil))) {
+    //        [self.view setUserInteractionEnabled:NO];
+    //        [[FIRAuth auth] signInWithEmail:strUserEmail
+    //                               password:strUserPass
+    //                             completion:^(FIRUser *user, NSError *error) {
+    //                                 // [START_EXCLUDE]
+    //                                 if (error != nil) {
+    //                                     [self.view setUserInteractionEnabled:YES];
+    //                                     [self getUserDataAndGo];
+    //                                 }
+    //                                 else
+    //                                 {
+    //                                     UIAlertController * loginErrorAlert = [UIAlertController
+    //                                                                            alertControllerWithTitle:@"Login Failed"
+    //                                                                            message:error.localizedDescription
+    //                                                                            preferredStyle:UIAlertControllerStyleAlert];
+    //                                     [self presentViewController:loginErrorAlert animated:YES completion:nil];
+    //                                     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+    //                                         [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
+    //                                     }];
+    //                                     [loginErrorAlert addAction:ok];
+    //
+    //                                     [self.view setUserInteractionEnabled:YES];
+    //                                 }
+    //
+    //
+    //                                 // [END_EXCLUDE]
+    //                             }];
+    //
+    //    }
+    //    else{
+    SignInViewController *signInViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SignInViewController"];
+    [self.navigationController pushViewController:signInViewController animated:YES];
+    //    }
 }
 - (IBAction)SignUp:(UIButton *)sender {
     [self playSound:@"m3"];
@@ -333,13 +428,12 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
