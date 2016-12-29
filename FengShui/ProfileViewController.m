@@ -18,6 +18,9 @@
 #import "MBProgressHUD.h"
 #import "Request.h"
 @interface ProfileViewController ()//<UIGestureRecognizerDelegate>
+{
+    AppDelegate *app;
+}
 @property (weak, nonatomic) IBOutlet UITextField *txtEmail;
 @property (weak, nonatomic) IBOutlet UITextField *txtPassword;
 @property (weak, nonatomic) IBOutlet UITextField *txtUserName;
@@ -42,11 +45,17 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)viewWillAppear:(BOOL)animated{
-    AppDelegate *app = [UIApplication sharedApplication].delegate;
+    app = [UIApplication sharedApplication].delegate;
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     [self.view addGestureRecognizer:self.revealViewController.tapGestureRecognizer];
     [self.imgPersonPhoto sd_setImageWithURL:app.user.photoURL
                        placeholderImage:[UIImage imageNamed:@"Splash.png"]];
+    self.txtUserName.text = app.user.name;
+    self.txtEmail.text = app.user.email;
+    if ([[FIRAuth auth]currentUser].anonymous) {
+        self.txtEmail.text = @"";
+    }
+    
 }
 
 /*
@@ -133,7 +142,6 @@
     
     [self.imgPersonPhoto setImage:image];
     [picker dismissModalViewControllerAnimated:YES];
-    [Request savePhoto:image];
     
 }
 
@@ -145,6 +153,10 @@
 
 
 - (IBAction)goSignUp:(id)sender {
+    NSError *rerror;
+    if ([[FIRAuth auth]currentUser].anonymous) {
+        [[FIRAuth auth] signOut:&rerror];
+    }
     
     [self playSound:@"m3"];
     [self.view endEditing:YES];
@@ -188,7 +200,10 @@
         }];
         [loginErrorAlert addAction:ok];
     } else{
-        
+        if ([self.txtEmail.text isEqualToString:app.user.email]) {
+            [Request registerUser:self.txtUserName.text email:self.txtEmail.text image:self.imgPersonPhoto.image];
+            return;
+        }
         [self.view setUserInteractionEnabled:NO];
         
         
@@ -205,7 +220,7 @@
                      if (error != nil) {
                          UIAlertController * loginErrorAlert = [UIAlertController
                                                                 alertControllerWithTitle:@"Signup Failed"
-                                                                message:@"Authorization was not granted for the given email and password. Please checke for errors and try again."
+                                                                message:error.localizedDescription
                                                                 preferredStyle:UIAlertControllerStyleAlert];
                          [self presentViewController:loginErrorAlert animated:YES completion:nil];
                          UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){

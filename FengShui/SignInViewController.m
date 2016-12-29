@@ -110,7 +110,7 @@
                              if (error != nil) {
                                  UIAlertController * loginErrorAlert = [UIAlertController
                                                                         alertControllerWithTitle:@"Login Failed"
-                                                                        message:@"Authorization was not granted for the given email and password. Please checke for errors and try again."
+                                                                        message:error.localizedDescription
                                                                         preferredStyle:UIAlertControllerStyleAlert];
                                  [self presentViewController:loginErrorAlert animated:YES completion:nil];
                                  UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){

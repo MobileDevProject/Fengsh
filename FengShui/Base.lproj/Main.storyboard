@@ -235,13 +235,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKs-Lp-cR6">
-                                <rect key="frame" x="-33" y="114" width="441" height="440"/>
+                                <rect key="frame" x="-32.5" y="114" width="440" height="440"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="compass.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pzg-Gr-a75">
-                                        <rect key="frame" x="0.0" y="0.0" width="441" height="440"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="440" height="440"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="js6-OA-w6r">
-                                        <rect key="frame" x="46" y="45" width="350" height="350"/>
+                                        <rect key="frame" x="45.5" y="45" width="350" height="350"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="totalMenu_Menu.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Oy-KC-8LX">
                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="350"/>
@@ -675,7 +675,7 @@
                                         </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x6l-qT-gKC">
-                                        <rect key="frame" x="196" y="195" width="50" height="50"/>
+                                        <rect key="frame" x="195.5" y="195" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="dUd-8X-a9z"/>
                                             <constraint firstAttribute="height" constant="50" id="p4K-pU-ZXq"/>
@@ -1368,8 +1368,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_Background.png" translatesAutoresizingMaskIntoConstraints="NO" id="dwn-vu-jSX">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n2g-tj-PXb">
+                                <rect key="frame" x="147.5" y="627" width="80" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="FCP-dh-y2Z"/>
+                                    <constraint firstAttribute="width" constant="80" id="WMl-aE-uQF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNextLTPro-Medium" family="Avenir Next LT Pro" pointSize="17"/>
+                                <state key="normal" title="- SKIP -"/>
+                                <connections>
+                                    <action selector="skipLogin:" destination="y08-9R-a7d" eventType="touchUpInside" id="qYj-iY-TXa"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEp-iy-bmW">
-                                <rect key="frame" x="15" y="553" width="344" height="40"/>
+                                <rect key="frame" x="15" y="518" width="344" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="9C2-tP-hqh"/>
                                 </constraints>
@@ -1384,7 +1396,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfN-ay-GCK">
-                                <rect key="frame" x="15" y="607" width="70" height="40"/>
+                                <rect key="frame" x="15" y="572" width="70" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="gQ5-H6-x6e"/>
                                     <constraint firstAttribute="height" constant="40" id="qA9-U9-kbd"/>
@@ -1398,7 +1410,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f08-9f-Xub">
-                                <rect key="frame" x="105" y="607" width="254" height="40"/>
+                                <rect key="frame" x="105" y="572" width="254" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="qN8-PF-0uh"/>
                                 </constraints>
@@ -1427,11 +1439,13 @@
                             <constraint firstItem="f08-9f-Xub" firstAttribute="top" secondItem="XEp-iy-bmW" secondAttribute="bottom" constant="14" id="UCy-t0-JjJ"/>
                             <constraint firstItem="f08-9f-Xub" firstAttribute="leading" secondItem="VMB-Xw-Ryz" secondAttribute="leadingMargin" constant="89" id="gQP-RX-C3T"/>
                             <constraint firstItem="THA-MD-f8v" firstAttribute="height" secondItem="VMB-Xw-Ryz" secondAttribute="height" id="hPX-qD-MAJ"/>
+                            <constraint firstItem="n2g-tj-PXb" firstAttribute="centerX" secondItem="VMB-Xw-Ryz" secondAttribute="centerX" id="miQ-m0-6oE"/>
                             <constraint firstItem="nfN-ay-GCK" firstAttribute="centerY" secondItem="f08-9f-Xub" secondAttribute="centerY" id="mld-rX-l3L"/>
+                            <constraint firstItem="vDC-e6-NrD" firstAttribute="top" secondItem="n2g-tj-PXb" secondAttribute="bottom" constant="10" id="nKG-EW-opD"/>
                             <constraint firstItem="dwn-vu-jSX" firstAttribute="height" secondItem="VMB-Xw-Ryz" secondAttribute="height" id="oap-C4-OFz"/>
                             <constraint firstItem="f08-9f-Xub" firstAttribute="trailing" secondItem="XEp-iy-bmW" secondAttribute="trailing" id="qPt-sZ-acV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="f08-9f-Xub" secondAttribute="trailing" id="rtR-qY-gee"/>
-                            <constraint firstItem="vDC-e6-NrD" firstAttribute="top" secondItem="f08-9f-Xub" secondAttribute="bottom" constant="20" id="tdp-ee-OsN"/>
+                            <constraint firstItem="vDC-e6-NrD" firstAttribute="top" secondItem="f08-9f-Xub" secondAttribute="bottom" constant="55" id="tdp-ee-OsN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="W2K-1S-7wa"/>
@@ -2728,7 +2742,7 @@ This way it helps users to search for related items by simply using this app.</s
                                 <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XUL-Zy-qL9">
-                                        <rect key="frame" x="-1" y="0.0" width="376" height="1"/>
+                                        <rect key="frame" x="-0.5" y="0.0" width="375" height="1"/>
                                         <color key="backgroundColor" red="0.94901960780000005" green="0.39607843139999999" blue="0.1333333333" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="BCx-U8-HSF"/>

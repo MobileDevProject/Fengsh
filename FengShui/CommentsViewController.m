@@ -173,7 +173,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
+    [self.view setUserInteractionEnabled:YES];
     NSDictionary *currentComment = [arrCommentsDic objectAtIndex:indexPath.row];
     FIRDatabaseReference *ref = [[[Request dataref] child:@"users"]child:[currentComment  objectForKey:@"userid"]];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
@@ -217,7 +217,7 @@
 }
 -(void)loadComments{
     
-    [self.view setUserInteractionEnabled:NO];
+    //[self.view setUserInteractionEnabled:NO];
     
         arrCommentsDic = [[NSMutableArray alloc]init];
         //get all comments
@@ -240,7 +240,10 @@
                 [self.view setUserInteractionEnabled:YES];
             }
             
-        }];
+        } withCancelBlock:^(NSError * _Nonnull error) {
+            [self.view setUserInteractionEnabled:YES];
+        }
+         ];
     
 
     });
@@ -320,7 +323,9 @@
     
 }
 - (IBAction)writeComment:(UIButton *)sender {
-
+    if(![[FIRAuth auth]currentUser].anonymous) {
+        
+    
         //post comment
     if (![self.textView.text isEqualToString:@""]) {
         
@@ -365,6 +370,17 @@
         });
     }];
     });
+    }
+    }else{
+        UIAlertController * loginErrorAlert = [UIAlertController
+                                               alertControllerWithTitle:@"Please login with your account"
+                                               message:@"You can use this function with your account. Please login with your account."
+                                               preferredStyle:UIAlertControllerStyleAlert];
+        [self presentViewController:loginErrorAlert animated:YES completion:nil];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            [loginErrorAlert dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [loginErrorAlert addAction:ok];
     }
 }
 -(void)viewWillAppear:(BOOL)animated{

@@ -198,7 +198,7 @@
          if (error != nil) {
              UIAlertController * loginErrorAlert = [UIAlertController
                                                     alertControllerWithTitle:@"Signup Failed"
-                                                    message:@"Authorization was not granted for the given email and password. Please checke for errors and try again."
+                                                    message:error.localizedDescription
                                                     preferredStyle:UIAlertControllerStyleAlert];
              [self presentViewController:loginErrorAlert animated:YES completion:nil];
              UIAlertAction *ok = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
@@ -237,16 +237,7 @@
                  dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                      FIRStorageReference *photoImagesRef = [storageRef child:[NSString stringWithFormat:@"users photo/%@/photo.jpg", [Request currentUserUid]] ];
                      NSData *imageData = UIImagePNGRepresentation(self.imgPersonPhoto.image);
-                     //register email
-                     
-                     //    [[FIRAuth auth] sendPasswordResetWithEmail:email
-                     //                                    completion:^(NSError *_Nullable error) {
-                     //                                        if (error) {
-                     //                                            // An error happened.
-                     //                                        } else {
-                     //                                            // Password reset email sent.
-                     //                                        }
-                     //                                    }];
+                    
                      
                      //image compress until size < 1 MB
                      int count = 0;
